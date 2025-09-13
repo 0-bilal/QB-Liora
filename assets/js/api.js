@@ -17,7 +17,7 @@ const API_URL =
   // أو من <meta name="friendmeter-api" content="..."> داخل <head> (اختياري)
   (document.querySelector('meta[name="friendmeter-api"]')?.content || null) ||
   // أو ثابت افتراضي تحتاج لتعديله يدوياً
-  "https://script.google.com/macros/s/AKfycbwaQ8X1u_jh_dGVYyF6dZsESGI9U7dcTqhKxG-AmsT_twa0cFjLO-ktXBuM8bAfwqNwlA/exec";
+  "https://script.google.com/macros/s/AKfycbyt4mEdGo7t1eEqCqIc_cKWj3Ax12FCX1IHp9mtCS-WLyLkPTdj-QyT6NxjkXJ20RbC4g/exec";
 
 /**
  * إرسال طلب إلى GAS
@@ -104,3 +104,4 @@ document.addEventListener("DOMContentLoaded", () => {
     el.textContent = DATA_VERSIN; 
   });
 });
+
