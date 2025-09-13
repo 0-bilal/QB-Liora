@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QB-Liora</title>
+  <meta name="description" content="أنشئ اختبارات ممتعة واكتشف كم يعرف عنك أصدقاؤك. أدخل اسمك ورقمك التعريفي للبدء." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/index.css" />
+</head>
+<body>
+  <!-- شريط التنقل العلوي -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </a>
+        
+        <nav>
+          <a href="create.html" class="btn btn-small btn-outline">
+            <span>✨</span>
+            إنشاء اختبار
+          </a>
+          <a id="myQuizzesLink" href="owner.html" class="btn btn-small btn-secondary">
+            <span>📊</span>
+            اختباراتي
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- القسم البطل -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-emoji">🔥</span>
+            <span>الأكثر متعة مع الأصدقاء</span>
+          </div>
+          
+          <h1 class="hero-title">
+            اكتشف مدى 
+            <span class="gradient-text">معرفة أصدقائك</span>
+            بك
+          </h1>
+          
+          <p class="hero-description">
+            أنشئ اختبارات شخصية ممتعة، شاركها مع أصدقائك، واكتشف من يعرفك حقاً.
+            <strong>بسيط وسريع وممتع للجميع!</strong>
+          </p>
+          
+          <!-- التحية للمستخدم المحفوظ -->
+          <div id="helloUser" class="welcome-message" style="display: none;">
+            <span class="welcome-emoji">👋</span>
+            <span class="welcome-text"></span>
+          </div>
+          
+          <!-- إحصائيات سريعة -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">⚡</span>
+              <span class="stat-label">إعداد سريع</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">⭐</span>
+              <span class="stat-label">تقييم المستخدمين 4.7 </span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">🎮</span>
+              <span class="stat-label">ممتع</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="main-grid">
+        <!-- نموذج الدخول -->
+        <section class="auth-card">
+          <div class="auth-header">
+            <div class="auth-icon">🚀</div>
+            <h2>ابدأ رحلتك</h2>
+            <p>أدخل بياناتك للوصول إلى لوحة التحكم أو إنشاء حساب جديد</p>
+          </div>
+          
+          <form class="auth-form">
+            <div class="form-group">
+              <label for="authName" class="form-label">
+                <span class="label-icon">👤</span>
+                الاسم الكامل
+              </label>
+              <input 
+                id="authName" 
+                type="text" 
+                class="form-input" 
+                placeholder="مثال: بلال " 
+                autocomplete="name"
+                required
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="authPin" class="form-label">
+                <span class="label-icon">🔢</span>
+                الرقم التعريفي
+                <span class="label-badge">4 أرقام</span>
+              </label>
+              <input 
+                id="authPin" 
+                type="text" 
+                class="form-input pin-input" 
+                inputmode="numeric" 
+                maxlength="4" 
+                placeholder="● ● ● ●" 
+                autocomplete="one-time-code"
+                required
+              />
+              <small class="form-help">
+                <span class="help-icon">ℹ️</span>
+                يجب أن يكون فريداً وغير مستخدم من قبل
+              </small>
+            </div>
+            
+            <div class="form-actions">
+              <button id="btnGo" type="button" class="btn-main">
+                <span class="btn-icon">🚀</span>
+                <span class="btn-text">البدء الآن</span>
+                <span class="btn-loading" style="display: none;">⏳</span>
+              </button>
+              
+              <div class="form-status">
+                <div id="authMsg" class="status-message"></div>
+                <div id="authErr" class="error-message" style="display: none;"></div>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- كيف تعمل -->
+        <section class="how-it-works">
+          <div class="section-header">
+            <h2>كيف يعمل QB-Liora</h2>
+            <p>خطوات بسيطة للحصول على أقصى متعة</p>
+          </div>
+          
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <div class="step-icon">📝</div>
+              <h3>سجّل دخولك</h3>
+              <p>أدخل اسمك ورقماً تعريفياً من 4 أرقام. إذا كان جديداً، سننشئ لك حساباً.</p>
+            </div>
+            
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <div class="step-icon">🎯</div>
+              <h3>أنشئ اختبارك</h3>
+              <p>اكتب أسئلة عن نفسك واختر الإجابات الصحيحة. كن مبدعاً!</p>
+            </div>
+            
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <div class="step-icon">📤</div>
+              <h3>شارك مع الأصدقاء</h3>
+              <p>احصل على رابط الاختبار وشاركه في مجموعاتك ووسائل التواصل.</p>
+            </div>
+            
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <div class="step-icon">📊</div>
+              <h3>تابع النتائج</h3>
+              <p>شاهد من أجاب على اختبارك ومن حقق أعلى النقاط!</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- المميزات -->
+        <section class="features-section">
+          <div class="section-header">
+            <h2>لماذا !QB-Liora</h2>
+            <p>مميزات تجعل تجربتك أفضل</p>
+          </div>
+          
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>سرعة فائقة</h3>
+              <p>إعداد الاختبار في دقائق قليلة دون تعقيدات</p>
+            </div>
+                
+            <div class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h3>أسئلة متنوعة</h3>
+              <p>مجموعة واسعة من الأسئلة الجاهزة والمخصصة</p>
+            </div>
+            
+            <div class="feature-card">
+              <div class="feature-icon">📈</div>
+              <h3>نتائج تفصيلية</h3>
+              <p>إحصائيات شاملة ومقارنات دقيقة</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </div>
+        <p class="footer-description">
+          اكتشف مدى معرفة أصدقائك بك من خلال اختبارات شخصية ممتعة
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4 class="footer-title">روابط سريعة</h4>
+        <ul class="link-list">
+          <li><a href="create.html">إنشاء اختبار</a></li>
+          <li><a href="play.html">جرّب اللعب</a></li>
+          <li><a href="owner.html">اختباراتي</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">معلومات</h4>
+        <ul class="link-list">
+          <li><a >ليورا — QB-Liora</a></li>
+          <li><a >الاصدار v2.1</a></li>
+          <li><a >تاريخ النشر 2025 سبنمبر</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">المطور والادوات</h4>
+        <ul class="link-list">
+          <li><a >تطوير بلال الخواجة</a></li>
+          <li><a >اللغات البرمجية</a></li>
+          <li><a >html , css , JavaScript</a></li>
+        </ul>
+      </div>
+
+    </div>
+    </div>
+  </footer>
+
+  <!-- السكربتات -->
+  <script src="./assets/js/api.js"></script>
+  <script>
+    // تحسين تجربة المستخدم وتفعيل الروابط
+    (function() {
+      try {
+        const cachedUser = JSON.parse(localStorage.getItem('fm_user') || 'null');
+        const myQuizzesLink = document.getElementById('myQuizzesLink');
+        const helloUser = document.getElementById('helloUser');
+        
+        if (cachedUser?.userId && cachedUser?.name) {
+          // تحديث رابط "اختباراتي"
+          if (myQuizzesLink) {
+            myQuizzesLink.href = `owner.html?user=${encodeURIComponent(cachedUser.userId)}`;
+          }
+          
+          // عرض رسالة الترحيب
+          if (helloUser) {
+            const welcomeText = helloUser.querySelector('.welcome-text');
+            if (welcomeText) {
+              welcomeText.textContent = `مرحباً ${cachedUser.name}! مستعد لإنشاء اختبار جديد؟`;
+              helloUser.style.display = 'flex';
+              helloUser.classList.add('fade-in');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('خطأ في تحميل بيانات المستخدم:', error);
+      }
+    })();
+  </script>
+  <script src="./assets/js/index.js"></script>
+</body>
+</html>

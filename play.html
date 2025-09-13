@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QB-Liora</title>
+  <meta name="description" content="أجب عن أسئلة صديقك واكتشف مدى معرفتك به. تحدي ممتع بنتائج فورية." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/play.css" />
+</head>
+<body>
+  <!-- شريط التنقل العلوي -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </a>
+        
+        <nav>
+          <a href="create.html" class="btn btn-small">
+            <span>✨</span>
+            أنشئ اختبارك
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- رأس الاختبار -->
+      <section class="quiz-header">
+        <div class="quiz-hero">
+          <div class="quiz-icon">🎮</div>
+          <div class="quiz-title-section">
+            <h1 id="title" class="quiz-title">اختبار صديقك</h1>
+            <p id="subtitle" class="quiz-subtitle">جارٍ تحميل الأسئلة...</p>
+          </div>
+        </div>
+        
+        <div class="progress-section" id="progressSection" style="display: none;">
+          <div class="progress-info">
+            <span class="progress-text">التقدم</span>
+            <span id="progressCount" class="progress-count">0 / 0</span>
+          </div>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- بيانات اللاعب -->
+      <section class="player-card">
+        <div class="player-header">
+          <div class="player-icon">👤</div>
+          <div class="player-info">
+            <h3>معلومات اللاعب</h3>
+            <p>اختياري - يساعد في تمييز نتيجتك</p>
+          </div>
+        </div>
+        
+        <div class="player-form">
+          <div class="form-group">
+            <label for="playerName" class="form-label">
+              <span class="label-icon">📝</span>
+              اسمك
+              <span class="label-optional">اختياري</span>
+            </label>
+            <input 
+              id="playerName" 
+              type="text" 
+              class="form-input player-input" 
+              placeholder="مثال: قصي"
+              autocomplete="name"
+            />
+            <small class="form-help">
+              <span class="help-icon">💡</span>
+              سيساعد هذا صديقك في معرفة من حقق هذه النتيجة
+            </small>
+          </div>
+        </div>
+      </section>
+
+      <!-- قائمة الأسئلة -->
+      <section id="questionsSection" class="questions-section" style="display: none;">
+        <div class="section-header">
+          <h2>
+            <span class="title-icon">❓</span>
+            الأسئلة
+          </h2>
+          <p>اختر إجابة واحدة لكل سؤال</p>
+        </div>
+        
+        <div id="questions" class="questions-grid" aria-live="polite"></div>
+      </section>
+
+      <!-- أزرار العمل -->
+      <section id="actionsSection" class="actions-section" style="display: none;">
+        <div class="actions-content">
+          <button id="submitBtn" class="btn-submit" disabled>
+            <span class="btn-icon">🚀</span>
+            <span class="btn-text">إرسال الإجابات</span>
+            <span class="btn-loading" style="display: none;">⏳</span>
+          </button>
+          
+          <div id="loading" class="loading-message" style="display: none;">
+            <div class="loading-spinner"></div>
+            <span>جارٍ حساب النتيجة...</span>
+          </div>
+          
+          <div class="actions-help">
+            <span class="help-icon">💡</span>
+            <span>تأكد من الإجابة على جميع الأسئلة قبل الإرسال</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- النتيجة -->
+      <section id="resultCard" class="result-section" style="display: none;">
+        <div class="result-card">
+          <div class="result-header">
+            <div class="result-icon">🎉</div>
+            <div class="result-title">
+              <h3>نتيجتك النهائية!</h3>
+              <p>هذا مستوى معرفتك بصديقك</p>
+            </div>
+          </div>
+          
+          <div class="result-content">
+            <div class="score-display">
+              <div id="result" class="score-text">نتيجتك: 0 من 0</div>
+              <div id="scorePercentage" class="score-percentage">0%</div>
+            </div>
+            
+            <div id="scoreLevel" class="score-level">
+              <div class="level-icon">⭐</div>
+              <div class="level-text">مستوى المعرفة</div>
+            </div>
+            
+            <div id="encouragementText" class="encouragement">
+              <p>رائع! استمتع باللعب مع أصدقائك</p>
+            </div>
+          </div>
+          
+          <div class="result-actions">
+            <a id="tryOwnBtn" href="create.html" class="btn">
+              <span>✨</span>
+              أنشئ اختبارك أنت أيضاً
+            </a>
+            <button id="copyResultBtn" class="btn btn-outline">
+              <span>📋</span>
+              انسخ النتيجة
+            </button>
+            <button id="shareResultBtn" class="btn btn-outline">
+              <span>📤</span>
+              شارك النتيجة
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- رسائل الخطأ -->
+      <div id="err" class="error-alert" style="display: none;"></div>
+
+      <!-- رسالة JavaScript معطل -->
+      <noscript>
+        <div class="noscript-message">
+          <div class="noscript-icon">⚠️</div>
+          <h3>JavaScript مطلوب</h3>
+          <p>هذا الموقع يحتاج تشغيل JavaScript لعرض الاختبار والتفاعل معه.</p>
+          <small>يرجى تفعيله في إعدادات المتصفح والمحاولة مرة أخرى.</small>
+        </div>
+      </noscript>
+    </div>
+  </main>
+
+  <!-- التذييل -->
+   <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </div>
+        <p class="footer-description">
+          اكتشف مدى معرفة أصدقائك بك من خلال اختبارات شخصية ممتعة
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4 class="footer-title">روابط سريعة</h4>
+        <ul class="link-list">
+          <li><a href="create.html">إنشاء اختبار</a></li>
+          <li><a href="play.html">جرّب اللعب</a></li>
+          <li><a href="owner.html">اختباراتي</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">معلومات</h4>
+        <ul class="link-list">
+          <li><a >ليورا — QB-Liora</a></li>
+          <li><a >الاصدار v2.1</a></li>
+          <li><a >تاريخ النشر 2025 سبنمبر</a></li>
+        </ul>
+      </div>
+
+        <div class="footer-info">
+        <h4 class="footer-title">المطور والادوات</h4>
+        <ul class="link-list">
+          <li><a >تطوير بلال الخواجة</a></li>
+          <li><a >اللغات البرمجية</a></li>
+          <li><a >html , css , JavaScript</a></li>
+        </ul>
+      </div>
+
+    </div>
+    </div>
+  </footer>
+
+  <!-- السكربتات -->
+  <script src="./assets/js/api.js"></script>
+  <script src="./assets/js/play.js"></script>
+  <script>
+    // تحسينات إضافية لتجربة المستخدم
+    (function() {
+      // نسخ النتيجة
+      const copyBtn = document.getElementById('copyResultBtn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const resultText = document.getElementById('result')?.textContent?.trim() || '';
+          const playerName = document.getElementById('playerName')?.value?.trim() || 'مجهول';
+          
+          if (!resultText) return;
+          
+          const shareText = `🎯 نتيجتي في QB-Liora:\n${resultText}\nاللاعب: ${playerName}\n\nجرب أنت أيضاً: ${window.location.origin}`;
+          
+          const originalContent = copyBtn.innerHTML;
+          try {
+            await navigator.clipboard.writeText(shareText);
+            copyBtn.innerHTML = '<span>✅</span>تم النسخ';
+            copyBtn.classList.add('success');
+            
+            setTimeout(() => {
+              copyBtn.innerHTML = originalContent;
+              copyBtn.classList.remove('success');
+            }, 2000);
+          } catch (error) {
+            copyBtn.innerHTML = '<span>❌</span>فشل النسخ';
+            copyBtn.classList.add('error');
+            
+            setTimeout(() => {
+              copyBtn.innerHTML = originalContent;
+              copyBtn.classList.remove('error');
+            }, 2000);
+          }
+        });
+      }
+      
+      // مشاركة النتيجة
+      const shareBtn = document.getElementById('shareResultBtn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+          const resultText = document.getElementById('result')?.textContent?.trim() || '';
+          const playerName = document.getElementById('playerName')?.value?.trim() || 'مجهول';
+          
+          if (!resultText) return;
+          
+          const shareText = `🎯 نتيجتي في QB-Liora: ${resultText} - ${playerName}`;
+          const shareUrl = window.location.href;
+          
+          if (navigator.share) {
+            try {
+              await navigator.share({
+                title: 'نتيجتي في QB-Liora',
+                text: shareText,
+                url: shareUrl
+              });
+            } catch (error) {
+              // فشل المشاركة الأصلية، نسخ النص
+              fallbackShare(shareText);
+            }
+          } else {
+            fallbackShare(shareText);
+          }
+        });
+      }
+      
+      function fallbackShare(text) {
+        try {
+          navigator.clipboard.writeText(text);
+          showToast('تم نسخ النتيجة للمشاركة');
+        } catch (error) {
+          showToast('لم تنجح المشاركة');
+        }
+      }
+      
+      function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.textContent = message;
+        toast.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: var(--accent-primary);
+          color: white;
+          padding: 12px 20px;
+          border-radius: 8px;
+          z-index: 1000;
+          animation: slideInRight 0.3s ease-out;
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.style.animation = 'slideOutRight 0.3s ease-out';
+          setTimeout(() => toast.remove(), 300);
+        }, 2000);
+      }
+      
+      // إضافة الحركات
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideInRight {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QB-Liora</title>
+  <meta name="description" content="أنشئ اختباراً شخصياً من الأسئلة الجاهزة أو المخصصة. حدد إجاباتك واحصل على روابط المشاركة فوراً." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/create.css" />
+</head>
+<body>
+  <!-- شريط التنقل العلوي -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </a>
+        
+        <nav>
+          <a href="index.html" class="btn btn-small btn-outline">
+            <span>🏠</span>
+            الرئيسية
+          </a>
+          <a href="play.html" class="btn btn-small btn-secondary">
+            <span>🎮</span>
+            جرّب اختبار
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- قسم المقدمة -->
+      <section class="intro-section">
+        <div class="intro-content">
+          <h1 class="intro-title">
+            <span class="title-icon">✨</span>
+            أنشئ اختبارك المميز
+          </h1>
+          <p class="intro-description">
+            اختر من الأسئلة الجاهزة أو أضف أسئلة مخصصة، حدد إجاباتك الصحيحة، 
+            واحصل على روابط المشاركة والمتابعة فوراً
+          </p>
+          
+          <div class="intro-steps">
+            <div class="step-item">
+              <span class="step-number">1</span>
+              <span>اختر الأسئلة</span>
+            </div>
+            <div class="step-divider">→</div>
+            <div class="step-item">
+              <span class="step-number">2</span>
+              <span>حدد الإجابات</span>
+            </div>
+            <div class="step-divider">→</div>
+            <div class="step-item">
+              <span class="step-number">3</span>
+              <span>احصل على الروابط</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- بيانات المالك -->
+      <section class="owner-card">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>
+              <span class="title-icon">👤</span>
+              بياناتك الشخصية
+            </h2>
+            <p>معلومات أساسية لإنشاء الاختبار</p>
+          </div>
+        </div>
+        
+        <div class="owner-form">
+          <div class="form-group">
+            <label for="ownerName" class="form-label">
+              <span class="label-icon">📝</span>
+              اسمك
+              <span class="label-optional">اختياري</span>
+            </label>
+            <input 
+              id="ownerName" 
+              type="text" 
+              class="form-input" 
+              placeholder="مثال: بلال أحمد"
+              autocomplete="name"
+            />
+            <small class="form-help">
+              <span class="help-icon">💡</span>
+              قد يظهر هذا الاسم للأصدقاء عند لعب الاختبار
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label for="ownerPIN" class="form-label">
+              <span class="label-icon">🔒</span>
+              رقم سري للحماية
+              <span class="label-badge">PIN</span>
+            </label>
+            <input 
+              id="ownerPIN" 
+              type="text" 
+              class="form-input pin-input" 
+              inputmode="numeric" 
+              placeholder="● ● ● ●" 
+              maxlength="4"
+            />
+            <small class="form-help">
+              <span class="help-icon">🛡️</span>
+              حماية إضافية للوحة المالك - لا تشارك هذا الرقم مع أحد
+            </small>
+          </div>
+        </div>
+      </section>
+
+      <!-- الأسئلة الجاهزة -->
+      <section class="defaults-card">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>
+              <span class="title-icon">📋</span>
+              الأسئلة الجاهزة
+            </h2>
+            <p>مجموعة متنوعة من الأسئلة الممتعة جاهزة للاستخدام</p>
+          </div>
+          
+          <div class="section-actions">
+            <button id="enableAllBtn" class="btn btn-small">
+              <span>✅</span>
+              تفعيل الكل
+            </button>
+            <button id="disableAllBtn" class="btn btn-small btn-ghost">
+              <span>❌</span>
+              تعطيل الكل
+            </button>
+            <div class="enabled-counter">
+              <span class="counter-icon">🎯</span>
+              <span>المفعل: </span>
+              <span id="enabledCount" class="counter-value">0</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="defaults-help">
+          <div class="help-item">
+            <span class="help-icon">🔄</span>
+            <span>فعّل أو عطّل أي سؤال حسب رغبتك</span>
+          </div>
+          <div class="help-item">
+            <span class="help-icon">✔️</span>
+            <span>اختر إجابتك الصحيحة لكل سؤال مفعّل</span>
+          </div>
+        </div>
+        
+        <div id="defaultList" class="questions-grid"></div>
+      </section>
+
+      <!-- الأسئلة المخصصة -->
+      <section class="customs-card">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>
+              <span class="title-icon">🎨</span>
+              أسئلة مخصصة
+            </h2>
+            <p>أضف أسئلتك الشخصية مع خيارات مخصصة</p>
+          </div>
+          
+          <button id="addCustomBtn" class="btn btn-outline">
+            <span>➕</span>
+            إضافة سؤال جديد
+          </button>
+        </div>
+        
+        <div class="customs-help">
+          <div class="help-item">
+            <span class="help-icon">✍️</span>
+            <span>اكتب سؤالك وأضف 4 خيارات كحد أقصى</span>
+          </div>
+          <div class="help-item">
+            <span class="help-icon">🎯</span>
+            <span>علّم على الإجابة الصحيحة</span>
+          </div>
+          <div class="help-item">
+            <span class="help-icon">🔀</span>
+            <span>يمكنك ترتيب الأسئلة أو حذفها</span>
+          </div>
+        </div>
+        
+        <div id="customList" class="customs-grid"></div>
+      </section>
+
+      <!-- أزرار العمل -->
+      <section class="actions-section">
+        <div class="actions-content">
+          <button id="createBtn" class="btn-create">
+            <span class="btn-icon">🚀</span>
+            <span class="btn-text">إنشاء الاختبار</span>
+            <span class="btn-loading" style="display: none;">⏳</span>
+          </button>
+          
+          <div id="loading" class="loading-message" style="display: none;">
+            <div class="loading-spinner"></div>
+            <span>جارٍ إنشاء اختبارك المميز...</span>
+          </div>
+          
+          <p class="actions-hint">
+            <span class="hint-icon">💡</span>
+            تأكد من تفعيل الأسئلة المرغوبة وتحديد الإجابات الصحيحة
+          </p>
+        </div>
+      </section>
+
+      <!-- نتائج الإنشاء -->
+      <section id="shareBox" class="result-card success-card" style="display: none;">
+        <div class="result-header">
+          <div class="result-icon success">🎉</div>
+          <div class="result-title">
+            <h3>رابط المشاركة جاهز!</h3>
+            <p>شارك هذا الرابط مع أصدقائك للعب الاختبار</p>
+          </div>
+        </div>
+        
+        <div class="result-content">
+          <div class="link-display">
+            <div id="share" class="link-text"></div>
+            <button id="copyBtn" class="btn-copy" title="نسخ الرابط">
+              <span class="copy-icon">📋</span>
+              <span class="copy-text">نسخ</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="result-actions">
+          <button class="btn btn-small btn-outline" onclick="window.open(document.querySelector('#share a').href, '_blank')">
+            <span>🔗</span>
+            فتح الرابط
+          </button>
+        </div>
+      </section>
+
+      <section id="ownerBox" class="result-card owner-card" style="display: none;">
+        <div class="result-header">
+          <div class="result-icon owner">🔐</div>
+          <div class="result-title">
+            <h3>رابط المالك (سري)</h3>
+            <p>استخدم هذا الرابط لمتابعة النتائج - لا تشاركه مع أحد</p>
+          </div>
+        </div>
+        
+        <div class="result-content">
+          <div class="link-display">
+            <div id="ownerLinkWrap" class="link-text"></div>
+            <button id="copyOwnerBtn" class="btn-copy" title="نسخ رابط المالك">
+              <span class="copy-icon">📋</span>
+              <span class="copy-text">نسخ</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="result-actions">
+          <button class="btn btn-small btn-outline" onclick="window.open(document.querySelector('#ownerLinkWrap a').href, '_blank')">
+            <span>👁️</span>
+            فتح لوحة المالك
+          </button>
+        </div>
+      </section>
+
+      <!-- رسائل الخطأ -->
+      <div id="err" class="error-alert" style="display: none;"></div>
+
+      <!-- نصائح ومساعدة -->
+      <section class="tips-section">
+        <div class="tips-header">
+          <h2>
+            <span class="title-icon">💡</span>
+            نصائح للحصول على أفضل نتيجة
+          </h2>
+        </div>
+        
+        <div class="tips-grid">
+          <div class="tip-card">
+            <div class="tip-icon">🎯</div>
+            <h3>اختر بعناية</h3>
+            <p>فعّل فقط الأسئلة التي تعكس شخصيتك وتناسب أصدقاءك</p>
+          </div>
+          
+          <div class="tip-card">
+            <div class="tip-icon">✅</div>
+            <h3>تأكد من الإجابات</h3>
+            <p>راجع جميع إجاباتك قبل الإنشاء للتأكد من صحتها</p>
+          </div>
+          
+          <div class="tip-card">
+            <div class="tip-icon">🎨</div>
+            <h3>كن مبدعاً</h3>
+            <p>أضف أسئلة مخصصة تعبر عن شخصيتك وتجعل الاختبار أكثر تميزاً</p>
+          </div>
+          
+      </section>
+    </div>
+  </main>
+
+  <!-- التذييل -->
+   <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </div>
+        <p class="footer-description">
+          اكتشف مدى معرفة أصدقائك بك من خلال اختبارات شخصية ممتعة
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4 class="footer-title">روابط سريعة</h4>
+        <ul class="link-list">
+          <li><a href="create.html">إنشاء اختبار</a></li>
+          <li><a href="play.html">جرّب اللعب</a></li>
+          <li><a href="owner.html">اختباراتي</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">معلومات</h4>
+        <ul class="link-list">
+          <li><a >ليورا — QB-Liora</a></li>
+          <li><a >الاصدار v2.1</a></li>
+          <li><a >تاريخ النشر 2025 سبنمبر</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">المطور والادوات</h4>
+        <ul class="link-list">
+          <li><a >تطوير بلال الخواجة</a></li>
+          <li><a >اللغات البرمجية</a></li>
+          <li><a >html , css , JavaScript</a></li>
+        </ul>
+      </div>
+
+    </div>
+    </div>
+  </footer>
+
+  <!-- قوالب الأسئلة -->
+  <template id="tplDefaultItem">
+    <div class="question-card default-question" data-default-item>
+      <div class="question-header">
+        <div class="question-title" data-text>نص السؤال</div>
+        <label class="question-toggle">
+          <input type="checkbox" data-toggle />
+          <span class="toggle-slider"></span>
+          <span class="toggle-label">مفعّل</span>
+        </label>
+      </div>
+      
+      <div class="question-options">
+        <div class="options-display" data-options></div>
+      </div>
+      
+      <div class="question-answer">
+        <label class="answer-label">
+          <span class="answer-icon">✅</span>
+          <span>الإجابة الصحيحة</span>
+        </label>
+        <select class="answer-select" data-correct></select>
+      </div>
+      
+      <div class="question-note">
+        <span class="note-icon">💡</span>
+        <span>هذا السؤال سيظهر للأصدقاء فقط إذا كان مفعّلاً</span>
+      </div>
+    </div>
+  </template>
+
+  <template id="tplCustomItem">
+    <div class="question-card custom-question" data-custom-item>
+      <div class="question-header">
+        <div class="question-badge">
+          <span class="badge-icon">🎨</span>
+          <span>سؤال مخصص</span>
+        </div>
+        
+        <div class="question-controls">
+          <button type="button" class="control-btn move-up" data-move-up title="تحريك لأعلى">
+            <span>⬆️</span>
+          </button>
+          <button type="button" class="control-btn move-down" data-move-down title="تحريك لأسفل">
+            <span>⬇️</span>
+          </button>
+          <button type="button" class="control-btn remove" data-remove title="حذف">
+            <span>🗑️</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="custom-form">
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">❓</span>
+            نص السؤال
+          </label>
+          <input type="text" class="form-input" data-qtext placeholder="اكتب سؤالك هنا..." />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <span class="label-icon">📝</span>
+            الخيارات المتاحة
+            <span class="label-help">(علّم على الإجابة الصحيحة)</span>
+          </label>
+          
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="correct-__ID__" data-correct value="0" />
+              <span class="option-radio"></span>
+              <input type="text" class="option-input" data-opt placeholder="الخيار الأول" />
+            </label>
+            
+            <label class="option-item">
+              <input type="radio" name="correct-__ID__" data-correct value="1" />
+              <span class="option-radio"></span>
+              <input type="text" class="option-input" data-opt placeholder="الخيار الثاني" />
+            </label>
+            
+            <label class="option-item">
+              <input type="radio" name="correct-__ID__" data-correct value="2" />
+              <span class="option-radio"></span>
+              <input type="text" class="option-input" data-opt placeholder="الخيار الثالث" />
+            </label>
+            
+            <label class="option-item">
+              <input type="radio" name="correct-__ID__" data-correct value="3" />
+              <span class="option-radio"></span>
+              <input type="text" class="option-input" data-opt placeholder="الخيار الرابع" />
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="question-note">
+        <span class="note-icon">⚠️</span>
+        <span>السؤال يحتاج نصاً وخيارين على الأقل ليتم إضافته للاختبار</span>
+      </div>
+    </div>
+  </template>
+
+  <!-- السكربتات -->
+  <script src="./assets/js/api.js"></script>
+  <script src="./assets/js/create.js"></script>
+  <script>
+    // تحسينات إضافية لتجربة المستخدم
+    (function() {
+      // نسخ الروابط
+      function setupCopyButton(buttonId, linkSelector) {
+        const button = document.getElementById(buttonId);
+        if (!button) return;
+        
+        button.addEventListener('click', async () => {
+          const linkElement = document.querySelector(linkSelector);
+          if (!linkElement) return;
+          
+          const originalContent = button.innerHTML;
+          try {
+            await navigator.clipboard.writeText(linkElement.href);
+            button.innerHTML = '<span class="copy-icon">✅</span><span class="copy-text">تم النسخ</span>';
+            button.classList.add('success');
+            
+            setTimeout(() => {
+              button.innerHTML = originalContent;
+              button.classList.remove('success');
+            }, 2000);
+          } catch (error) {
+            button.innerHTML = '<span class="copy-icon">❌</span><span class="copy-text">فشل النسخ</span>';
+            button.classList.add('error');
+            
+            setTimeout(() => {
+              button.innerHTML = originalContent;
+              button.classList.remove('error');
+            }, 2000);
+          }
+        });
+      }
+      
+      setupCopyButton('copyBtn', '#share a');
+      setupCopyButton('copyOwnerBtn', '#ownerLinkWrap a');
+      
+      // تقييد PIN للأرقام فقط
+      const pinInput = document.getElementById('ownerPIN');
+      if (pinInput) {
+        pinInput.addEventListener('input', (e) => {
+          e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+        });
+      }
+      
+      // تأثيرات التمرير السلس
+      function smoothScrollToElement(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }
+      }
+      
+      // إضافة مراقب للنتائج للتمرير التلقائي
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            const target = mutation.target;
+            if ((target.id === 'shareBox' || target.id === 'ownerBox') && 
+                target.style.display === 'block') {
+              setTimeout(() => smoothScrollToElement(target.id), 100);
+            }
+          }
+        });
+      });
+      
+      const shareBox = document.getElementById('shareBox');
+      const ownerBox = document.getElementById('ownerBox');
+      
+      if (shareBox) observer.observe(shareBox, { attributes: true });
+      if (ownerBox) observer.observe(ownerBox, { attributes: true });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QB-Liora</title>
+  <meta name="description" content="شاهد نتيجتك في اختبار صديقك وقارن إجاباتك مع الإجابات الصحيحة." />
+  <meta name="theme-color" content="#0ea5e9" />
+  
+  <!-- تحسين المشاركة الاجتماعية -->
+  <meta property="og:title" content="نتيجتي في QB-Liora" />
+  <meta property="og:description" content="اكتشف مدى معرفتك بأصدقائك من خلال اختبارات ممتعة!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/images/og-result.png" />
+  
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/result.css" />
+</head>
+<body>
+  <!-- شريط التنقل العلوي -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </a>
+        
+        <nav>
+          <a href="create.html" class="btn btn-small">
+            <span>✨</span>
+            أنشئ اختبارك
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- قسم النتيجة الرئيسي -->
+      <section class="result-hero">
+        <div class="result-celebration">
+          <div class="celebration-icon">🏆</div>
+          <div class="celebration-particles"></div>
+        </div>
+        
+        <div class="result-content">
+          <h1 class="result-title">نتيجتك النهائية</h1>
+          <p id="ownerHint" class="result-subtitle">جارٍ تحميل التفاصيل...</p>
+          
+          <div class="score-container">
+            <div class="score-display">
+              <div id="scoreValue" class="score-number">—</div>
+              <div class="score-label">من إجمالي النقاط</div>
+            </div>
+            
+            <div class="progress-container">
+              <div class="progress-info">
+                <span class="progress-label">معدل الأداء</span>
+                <span id="progressPercentage" class="progress-percentage">0%</span>
+              </div>
+              <div class="progress-bar">
+                <div id="progress" class="progress-fill"></div>
+                <div class="progress-glow"></div>
+              </div>
+            </div>
+            
+            <div class="verdict-container">
+              <div class="verdict-icon">⭐</div>
+              <div id="verdict" class="verdict-text">جارٍ التقييم...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- إحصائيات سريعة -->
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card correct">
+            <div class="stat-icon">✅</div>
+            <div class="stat-content">
+              <div id="correctCount" class="stat-number">0</div>
+              <div class="stat-label">إجابات صحيحة</div>
+            </div>
+          </div>
+          
+          <div class="stat-card total">
+            <div class="stat-icon">📝</div>
+            <div class="stat-content">
+              <div id="totalQuestions" class="stat-number">0</div>
+              <div class="stat-label">إجمالي الأسئلة</div>
+            </div>
+          </div>
+          
+          <div class="stat-card accuracy">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <div id="accuracyRate" class="stat-number">0%</div>
+              <div class="stat-label">معدل الدقة</div>
+            </div>
+          </div>
+          
+          <div class="stat-card level">
+            <div class="stat-icon">🌟</div>
+            <div class="stat-content">
+              <div id="levelName" class="stat-number">—</div>
+              <div class="stat-label">مستوى المعرفة</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- أزرار العمل -->
+      <section class="actions-section">
+        <div class="actions-grid">
+          <a id="createOwn" href="create.html" class="action-btn primary">
+            <span class="btn-icon">✨</span>
+            <div class="btn-content">
+              <div class="btn-title">أنشئ اختبارك</div>
+              <div class="btn-subtitle">اختبر أصدقاءك الآن</div>
+            </div>
+          </a>
+          
+          <button id="copySummaryBtn" class="action-btn secondary">
+            <span class="btn-icon">📋</span>
+            <div class="btn-content">
+              <div class="btn-title">انسخ النتيجة</div>
+              <div class="btn-subtitle">شارك مع الأصدقاء</div>
+            </div>
+          </button>
+          
+          <button id="shareBtn" class="action-btn tertiary">
+            <span class="btn-icon">📤</span>
+            <div class="btn-content">
+              <div class="btn-title">شارك النتيجة</div>
+              <div class="btn-subtitle">في وسائل التواصل</div>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- تفاصيل الإجابات -->
+      <section id="breakdownCard" class="breakdown-section" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>
+              <span class="title-icon">📊</span>
+              تفاصيل إجاباتك
+            </h2>
+            <p>مقارنة شاملة بين إجاباتك والإجابات الصحيحة</p>
+          </div>
+          
+          <div class="section-controls">
+            <button id="toggleBreakdown" class="btn btn-small btn-outline">
+              <span>👁️</span>
+              <span class="toggle-text">إخفاء التفاصيل</span>
+            </button>
+          </div>
+        </div>
+        
+        <div id="breakdownList" class="breakdown-grid"></div>
+      </section>
+
+      <!-- روابط مفيدة -->
+      <section class="navigation-section">
+        <div class="nav-card">
+          <div class="nav-content">
+            <div class="nav-text">
+              <h3>ماذا تريد أن تفعل الآن؟</h3>
+              <p>يمكنك العودة للصفحة الرئيسية أو إعادة المحاولة</p>
+            </div>
+            
+            <div class="nav-actions">
+              <a id="retryLink" href="index.html" class="nav-btn home">
+                <span class="nav-icon">🏠</span>
+                <span>الصفحة الرئيسية</span>
+              </a>
+              
+              <a id="replayLink" href="javascript:void(0)" class="nav-btn replay">
+                <span class="nav-icon">🔄</span>
+                <span>أعد المحاولة</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- رسائل الخطأ -->
+      <div id="err" class="error-alert" style="display: none;"></div>
+
+      <!-- رسالة JavaScript معطل -->
+      <noscript>
+        <div class="noscript-message">
+          <div class="noscript-icon">⚠️</div>
+          <h3>JavaScript مطلوب</h3>
+          <p>هذه الصفحة تحتاج تشغيل JavaScript لعرض النتائج والتفاصيل.</p>
+          <small>يرجى تفعيله في إعدادات المتصفح والمحاولة مرة أخرى.</small>
+        </div>
+      </noscript>
+    </div>
+  </main>
+
+  <!-- التذييل -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </div>
+        <p class="footer-description">
+          اكتشف مدى معرفة أصدقائك بك من خلال اختبارات شخصية ممتعة
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4 class="footer-title">روابط سريعة</h4>
+        <ul class="link-list">
+          <li><a href="create.html">إنشاء اختبار</a></li>
+          <li><a href="play.html">جرّب اللعب</a></li>
+          <li><a href="owner.html">اختباراتي</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">معلومات</h4>
+        <ul class="link-list">
+          <li><a >ليورا — QB-Liora</a></li>
+          <li><a >الاصدار v2.1</a></li>
+          <li><a >تاريخ النشر 2025 سبنمبر</a></li>
+        </ul>
+      </div>
+
+        <div class="footer-info">
+        <h4 class="footer-title">المطور والادوات</h4>
+        <ul class="link-list">
+          <li><a >تطوير بلال الخواجة</a></li>
+          <li><a >اللغات البرمجية</a></li>
+          <li><a >html , css , JavaScript</a></li>
+        </ul>
+      </div>
+
+    </div>
+    </div>
+  </footer>
+
+  <!-- السكربتات -->
+  <script src="./assets/js/api.js"></script>
+  <script src="./assets/js/result.js"></script>
+  <script>
+    // تحسينات إضافية لتجربة المستخدم
+    (function() {
+      // نسخ ملخص النتيجة
+      const copyBtn = document.getElementById('copySummaryBtn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const verdict = document.getElementById('verdict')?.textContent?.trim() || '';
+          const score = document.getElementById('scoreValue')?.textContent?.trim() || '';
+          const ownerHint = document.getElementById('ownerHint')?.textContent?.trim() || '';
+          const shareUrl = window.location.href;
+          
+          const shareText = `🎯 نتيجتي في QB-Liora:\n${ownerHint}\nالنتيجة: ${score}\n${verdict}\n\nجربوا أنتم أيضاً: ${shareUrl}`;
+          
+          const originalContent = copyBtn.innerHTML;
+          try {
+            await navigator.clipboard.writeText(shareText);
+            copyBtn.innerHTML = '<span class="btn-icon">✅</span><div class="btn-content"><div class="btn-title">تم النسخ</div><div class="btn-subtitle">جاهز للمشاركة</div></div>';
+            copyBtn.classList.add('success');
+            
+            setTimeout(() => {
+              copyBtn.innerHTML = originalContent;
+              copyBtn.classList.remove('success');
+            }, 3000);
+          } catch (error) {
+            copyBtn.innerHTML = '<span class="btn-icon">❌</span><div class="btn-content"><div class="btn-title">فشل النسخ</div><div class="btn-subtitle">حاول مرة أخرى</div></div>';
+            copyBtn.classList.add('error');
+            
+            setTimeout(() => {
+              copyBtn.innerHTML = originalContent;
+              copyBtn.classList.remove('error');
+            }, 3000);
+          }
+        });
+      }
+      
+      // مشاركة النتيجة
+      const shareBtn = document.getElementById('shareBtn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+          const title = 'نتيجتي في QB-Liora';
+          const text = document.getElementById('verdict')?.textContent?.trim() || '';
+          const url = window.location.href;
+          
+          if (navigator.share) {
+            try {
+              await navigator.share({ title, text, url });
+            } catch (error) {
+              // فشل المشاركة الأصلية، نسخ النص
+              fallbackShare(`${title}: ${text}\n${url}`);
+            }
+          } else {
+            fallbackShare(`${title}: ${text}\n${url}`);
+          }
+        });
+      }
+      
+      function fallbackShare(text) {
+        try {
+          navigator.clipboard.writeText(text);
+          showToast('تم نسخ النتيجة للمشاركة');
+        } catch (error) {
+          showToast('لم تنجح المشاركة');
+        }
+      }
+      
+      function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        toast.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: var(--accent-primary);
+          color: white;
+          padding: 12px 20px;
+          border-radius: 8px;
+          z-index: 1000;
+          animation: slideInRight 0.3s ease-out;
+          font-weight: 600;
+          box-shadow: var(--shadow-lg);
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.style.animation = 'slideOutRight 0.3s ease-out';
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+      
+      // تحسين زر "أعد المحاولة"
+      const url = new URL(location.href);
+      const token = url.searchParams.get('token');
+      const replayLink = document.getElementById('replayLink');
+      
+      if (token) {
+        replayLink.href = `play.html?token=${encodeURIComponent(token)}`;
+      } else {
+        replayLink.classList.add('disabled');
+        replayLink.setAttribute('title', 'لا يوجد رمز اختبار متاح');
+        replayLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          showToast('لا يمكن إعادة المحاولة - رمز الاختبار غير متوفر');
+        });
+      }
+      
+      // تبديل عرض التفاصيل
+      const toggleBtn = document.getElementById('toggleBreakdown');
+      const breakdownList = document.getElementById('breakdownList');
+      
+      if (toggleBtn && breakdownList) {
+        toggleBtn.addEventListener('click', () => {
+          const isHidden = breakdownList.style.display === 'none';
+          const toggleText = toggleBtn.querySelector('.toggle-text');
+          
+          if (isHidden) {
+            breakdownList.style.display = 'grid';
+            toggleText.textContent = 'إخفاء التفاصيل';
+            toggleBtn.querySelector('span:first-child').textContent = '🙈';
+          } else {
+            breakdownList.style.display = 'none';
+            toggleText.textContent = 'عرض التفاصيل';
+            toggleBtn.querySelector('span:first-child').textContent = '👁️';
+          }
+        });
+      }
+      
+      // إضافة الحركات
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideInRight {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QB-Liora</title>
+  <meta name="description" content="استعرض نتائج اختباراتك وتفاصيل إجابات الأصدقاء. تابع الدرجات والإحصائيات الكاملة." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/owner.css" />
+</head>
+<body>
+  <!-- شريط التنقل العلوي -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </a>
+        
+        <nav>
+          <a href="create.html" class="btn btn-small btn-outline">
+            <span>✨</span>
+            إنشاء اختبار
+          </a>
+          <a id="myQuizzesLink" href="owner.html" class="btn btn-small">
+            <span>📊</span>
+            اختباراتي
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- بطاقة الوصول -->
+      <section id="accessCard" class="access-card" style="display: none;">
+        <div class="access-header">
+          <div class="access-icon">🔐</div>
+          <h2>الوصول إلى لوحة المالك</h2>
+          <p>أدخل بيانات الوصول لعرض نتائج اختبارك والتفاصيل الكاملة</p>
+        </div>
+        
+        <form id="accessForm" class="access-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="ownerToken" class="form-label">
+                <span class="label-icon">🎫</span>
+                رمز المالك
+                <span class="label-optional">اختياري</span>
+              </label>
+              <input 
+                id="ownerToken" 
+                type="text" 
+                class="form-input" 
+                placeholder="مثال: abc123xyz..."
+              />
+              <small class="form-help">
+                <span class="help-icon">💡</span>
+                يُفضل فتح الرابط المباشر من رسالة الإنشاء
+              </small>
+            </div>
+            
+            <div class="form-divider">
+              <span>أو</span>
+            </div>
+            
+            <div class="form-group">
+              <label for="shareToken" class="form-label">
+                <span class="label-icon">🔗</span>
+                رمز المشاركة
+              </label>
+              <input 
+                id="shareToken" 
+                type="text" 
+                class="form-input" 
+                placeholder="الموجود في رابط play.html?token=..."
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="ownerPIN" class="form-label">
+                <span class="label-icon">🔢</span>
+                الرقم السري
+                <span class="label-badge">PIN</span>
+              </label>
+              <input 
+                id="ownerPIN" 
+                type="text" 
+                class="form-input pin-input" 
+                inputmode="numeric" 
+                placeholder="1234"
+              />
+              <small class="form-help">
+                <span class="help-icon">🔒</span>
+                مطلوب فقط إذا كان الاختبار محمياً
+              </small>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button id="accessBtn" type="submit" class="btn-main">
+              <span class="btn-icon">🔍</span>
+              <span class="btn-text">عرض النتائج</span>
+              <span class="btn-loading" style="display: none;">⏳</span>
+            </button>
+            
+            <div id="accessLoading" class="loading-message" style="display: none;">
+              <div class="loading-spinner"></div>
+              <span>جارٍ التحقق من البيانات...</span>
+            </div>
+            
+            <div id="accessErr" class="error-message" style="display: none;"></div>
+          </div>
+        </form>
+      </section>
+
+      <!-- ملخص الاختبار -->
+      <section id="summaryCard" class="summary-card" style="display: none;">
+        <div class="summary-header">
+          <div class="summary-title">
+            <h1>
+              <span class="title-icon">📊</span>
+              لوحة المالك
+            </h1>
+            <p id="quizMeta" class="summary-subtitle">جارٍ التحميل...</p>
+          </div>
+          
+          <div class="summary-actions">
+            <button class="btn btn-small btn-ghost" onclick="location.reload()">
+              <span>🔄</span>
+              تحديث
+            </button>
+          </div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card owner">
+            <div class="stat-icon">👤</div>
+            <div class="stat-content">
+              <div class="stat-label">المالك</div>
+              <div id="ownerNameBadg" class="stat-value">—</div>
+            </div>
+          </div>
+          
+          <div class="stat-card mode">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <div class="stat-label">النمط</div>
+              <div id="modeBadg" class="stat-value">—</div>
+            </div>
+          </div>
+          
+          <div class="stat-card date">
+            <div class="stat-icon">📅</div>
+            <div class="stat-content">
+              <div class="stat-label">تاريخ الإنشاء</div>
+              <div id="createdAtBadg" class="stat-value">—</div>
+            </div>
+          </div>
+          
+          <div class="stat-card count">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-content">
+              <div class="stat-label">المحاولات</div>
+              <div id="countBadg" class="stat-value">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- جدول الجلسات -->
+      <section id="sessionsCard" class="sessions-card" style="display: none;">
+        <div class="sessions-header">
+          <div class="section-title">
+            <h2>
+              <span class="title-icon">🎮</span>
+              نتائج المشاركين
+            </h2>
+            <p>تفاصيل محاولات الأصدقاء والدرجات</p>
+          </div>
+        </div>
+        
+        <div class="sessions-table">
+          <div class="table-header">
+            <div class="th">
+              <span class="th-icon">👤</span>
+              <span>الاسم</span>
+            </div>
+            <div class="th">
+              <span class="th-icon">🏆</span>
+              <span>النقاط</span>
+            </div>
+            <div class="th desktop-only">
+              <span class="th-icon">🕐</span>
+              <span>البدء</span>
+            </div>
+            <div class="th desktop-only">
+              <span class="th-icon">✅</span>
+              <span>الانتهاء</span>
+            </div>
+            <div class="th">
+              <span class="th-icon">📋</span>
+              <span>التفاصيل</span>
+            </div>
+          </div>
+          
+          <div id="sessionsBody" class="table-body"></div>
+        </div>
+      </section>
+
+      <!-- تفاصيل الجلسة -->
+      <section id="detailsCard" class="details-card" style="display: none;">
+        <div class="details-header">
+          <div class="details-title">
+            <h3>
+              <span class="title-icon">📋</span>
+              تفاصيل الإجابات
+            </h3>
+            <p>مقارنة شاملة بين الإجابات المُختارة والصحيحة</p>
+          </div>
+          
+          <button id="closeDetails" class="btn btn-small btn-ghost">
+            <span>✕</span>
+            إغلاق
+          </button>
+        </div>
+        
+        <div id="detailsList" class="details-grid"></div>
+      </section>
+
+      <!-- رسائل الخطأ العامة -->
+      <div id="err" class="error-alert" style="display: none;"></div>
+
+      <noscript>
+        <div class="noscript-message">
+          <div class="noscript-icon">⚠️</div>
+          <h3>JavaScript مطلوب</h3>
+          <p>هذه الصفحة تحتاج تشغيل JavaScript للعمل بشكل صحيح. يرجى تفعيله في متصفحك.</p>
+        </div>
+      </noscript>
+    </div>
+  </main>
+
+  <!-- التذييل -->
+   <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-text">QB-Liora</span>
+          <span class="logo-icon">🌟</span>
+        </div>
+        <p class="footer-description">
+          اكتشف مدى معرفة أصدقائك بك من خلال اختبارات شخصية ممتعة
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4 class="footer-title">روابط سريعة</h4>
+        <ul class="link-list">
+          <li><a href="create.html">إنشاء اختبار</a></li>
+          <li><a href="play.html">جرّب اللعب</a></li>
+          <li><a href="owner.html">اختباراتي</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">معلومات</h4>
+        <ul class="link-list">
+          <li><a >ليورا — QB-Liora</a></li>
+          <li><a >الاصدار v2.1</a></li>
+          <li><a >تاريخ النشر 2025 سبنمبر</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-info">
+        <h4 class="footer-title">المطور والادوات</h4>
+        <ul class="link-list">
+          <li><a >تطوير بلال الخواجة</a></li>
+          <li><a >اللغات البرمجية</a></li>
+          <li><a >html , css , JavaScript</a></li>
+        </ul>
+      </div>
+
+    </div>
+    </div>
+  </footer>
+
+  <!-- السكربتات -->
+  <script src="./assets/js/api.js"></script>
+  <script>
+    // تفعيل رابط اختباراتي للمستخدمين المسجلين
+    (function() {
+      try {
+        const cachedUser = JSON.parse(localStorage.getItem('fm_user') || 'null');
+        const myQuizzesLink = document.getElementById('myQuizzesLink');
+        
+        if (cachedUser?.userId && myQuizzesLink) {
+          myQuizzesLink.href = `owner.html?user=${encodeURIComponent(cachedUser.userId)}`;
+        }
+      } catch (error) {
+        console.log('خطأ في تحميل بيانات المستخدم:', error);
+      }
+    })();
+  </script>
+  <script src="./assets/js/owner.js"></script>
+</body>
+</html>
