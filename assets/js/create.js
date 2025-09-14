@@ -274,8 +274,10 @@
     
     // تهيئة البيانات الافتراضية للنوع الجديد
     initializeTypeDefaults(type);
-    
-    // إعادة رسم قائمة الأسئلة
+    disableOtherTypesExcept(type); // تعطيل بقية التصنيفات تلقائياً
+    autoEnableType(type);            // ✅ تفعيل كل أسئلة النوع المختار
+
+
     renderDefaultList();
     
     // حفظ الحالة
@@ -532,47 +534,61 @@
   // =========================
   // تجميع حمولة الأسئلة للإرسال
   // =========================
-  function collectQuestionsForPayload() {
-    const list = [];
+ function collectQuestionsForPayload() {
+  const list = [];
 
-    // 1) الجاهزة المفعّلة من جميع الأنواع
-    Object.keys(QUESTION_BANKS).forEach(type => {
-      const bank = QUESTION_BANKS[type];
-      bank.forEach((q, idx) => {
-        if (!state.defaultEnabled[type] || !state.defaultEnabled[type][idx]) return;
-        const correct = Math.max(0, Math.min(q.options.length - 1, Number(state.defaultCorrect[type][idx] || 0)));
-        list.push({
-          text: q.text,
-          options: q.options.slice(),
-          correct,
-          type: type // إضافة نوع السؤال للمرجع
-        });
-      });
+  // 1) الجاهزة المفعّلة من النوع الحالي فقط
+  const type = state.currentType;
+  const bank = QUESTION_BANKS[type] || [];
+  (state.defaultEnabled[type] || []).forEach((isOn, idx) => {
+    if (!isOn) return;
+    const q = bank[idx];
+    if (!q) return;
+    const correct = Math.max(0, Math.min(q.options.length - 1, Number(state.defaultCorrect[type][idx] || 0)));
+    list.push({
+      text: q.text,
+      options: q.options.slice(),
+      correct,
+      type
     });
+  });
 
-    // 2) المخصّصة (تحقق من النص وعلى الأقل خيارين غير فارغين)
-    state.customs.forEach((c) => {
-      const text = (c.text || "").trim();
-      const optsTrim = c.options.map(x => (x || "").trim());
-      const validOptions = optsTrim.filter(t => !!t);
-      if (!text || validOptions.length < 2) return; // تجاهل غير المكتمل
+  // 2) الأسئلة المخصصة كالمعتاد
+  state.customs.forEach((c) => {
+    const text = (c.text || "").trim();
+    const optsTrim = c.options.map(x => (x || "").trim());
+    const validOptions = optsTrim.filter(t => !!t);
+    if (!text || validOptions.length < 2) return;
 
-      // إعادة ترقيم الخيارات الصحيحة
-      const nonEmptyIndices = optsTrim.map((t, i) => ({ text: t, originalIndex: i })).filter(item => !!item.text);
-      const options = nonEmptyIndices.map(item => item.text);
-      let correctNew = nonEmptyIndices.findIndex(item => item.originalIndex === c.correct);
-      if (correctNew === -1) correctNew = 0;
+    const nonEmptyIndices = optsTrim.map((t, i) => ({ text: t, originalIndex: i })).filter(item => !!item.text);
+    const options = nonEmptyIndices.map(item => item.text);
+    let correctNew = nonEmptyIndices.findIndex(item => item.originalIndex === c.correct);
+    if (correctNew === -1) correctNew = 0;
 
-      list.push({ 
-        text, 
-        options, 
-        correct: correctNew,
-        type: 'custom'
-      });
-    });
+    list.push({ text, options, correct: correctNew, type: 'custom' });
+  });
 
-    return list;
-  }
+  return list;
+}
+
+
+function disableOtherTypesExcept(selectedType) {
+  Object.keys(QUESTION_BANKS).forEach(t => {
+    if (t === selectedType) return;
+    const bank = QUESTION_BANKS[t] || [];
+    state.defaultEnabled[t] = bank.map(() => false);
+  });
+  saveState();
+}
+
+function autoEnableType(selectedType) {
+  const bank = QUESTION_BANKS[selectedType] || [];
+  // فعّل كل أسئلة النوع المختار
+  state.defaultEnabled[selectedType] = bank.map(() => true);
+  saveState();
+}
+
+
 
   // =========================
   // إنشاء الاختبار
@@ -822,9 +838,12 @@
 
       // تهيئة جميع أنواع الأسئلة
       initializeAllTypes();
+      loadState();  
 
+      disableOtherTypesExcept(state.currentType);
+      autoEnableType(state.currentType); // ✅ فعّل كامل النوع الحالي
       // تحميل حالة سابقة
-      loadState();
+     
 
       // تفعيل النوع الحالي في الواجهة
       elTypeButtons.forEach(btn => {
