@@ -1,7 +1,6 @@
-/* assets/js/create.js - المحدث مع أنواع الأسئلة
+/* assets/js/create.js - المحدث
  * إنشاء الاختبار – نسخة محسنة مع واجهة عصرية:
  *  - تفعيل/تعطيل الأسئلة الجاهزة + اختيار الإجابة الصحيحة لكل سؤال جاهز
- *  - ثلاثة أنواع من الأسئلة: عادية، متقدمة، احترافية
  *  - أسئلة مخصّصة (نص + ٤ خيارات) مع اختيار الصحيح براديو 
  *  - لا توجد معاينة منفصلة – التجميع يتم مباشرة من هذه البطاقات
  *  - يدعم PIN اختياري للـ"اختبار" نفسه (ownerPIN) لحماية لوحة المالك عبر token+pin
@@ -12,65 +11,26 @@
 
 (function () {
   // =========================
-  // بنوك الأسئلة الجاهزة حسب النوع
+  // بنك الأسئلة الجاهزة (يمكن تعديله)
   // =========================
-  const QUESTION_BANKS = {
-    basic: [
-      { text: "نوع العصير المفضل عند صديقك؟", options: ["برتقال طازج", "فراولة حلوة", "مانجا لذيذة", "ليمون منعش"] },
-      { text: "عادة غريبة يفعلها صديقك عند الجوع؟", options: ["صمت كامل", "سرعة أكل", "تذمر متكرر", "مزاح عشوائي"] },
-      { text: "أكثر كلمة يكررها صديقك؟", options: ["يلا بسرعة", "تمام كذا", "أوكي خلاص", "لا مشكلة"] },
-      { text: "أكثر مكان يفضّل صديقك الجلوس فيه؟", options: ["مقهى هادئ", "بيت مريح", "سفر بعيد", "بحر مفتوح"] },
-      { text: "أكثر مشروب يطلبه صديقك دائمًا؟", options: ["قهوة سوداء", "شاي دافئ", "عصير بارد", "مياه"] },
-      { text: "أكلة لا يستطيع صديقك مقاومتها؟", options: ["بيتزا ساخنة", "برجر كبير", "سلطة", "معكرونة لذيذة"] },
-      { text: "أكثر وقت يظهر فيه نشاط صديقك؟", options: ["صباح باكر", "ظهر حار", "مساء هادئ", "ليل متأخر"] },
-      { text: "ماذا يفضّل صديقك عند مشاهدة فيلم؟", options: ["أكشن مثير", "كوميديا خفيفة", "رعب مظلم", "دراما عاطفية"] },
-      { text: "عادة يفعلها صديقك عندما يمل؟", options: ["نوم طويل", "أكل خفيف", "جوال مستمر", "خروج قصير"] },
-      { text: "كلمة مناسبة لوصف صديقك بين أصحابه؟", options: ["هادي الطباع", "صاحب نكتة", "جاد", "متأخر دائمًا"] }
-    ],
-    
-    advanced: [
-      { text: "عندما يواجه صديقك ازدحامًا شديدًا، ماذا يكون التصرف؟", options: ["صبر وانتظار", "تذمر واضح", "انسحاب سريع", "التفاف"] },
-      { text: "عندما يحدد صديقك موعدًا مهمًا، كيف يستعد؟", options: ["تنظيم دقيق", "استعجال متوتر", "تأجيل معتاد", "نسيان كامل"] },
-      { text: "عندما يدخل صديقك مكانًا جديدًا، ما أول سلوك يظهر؟", options: ["مراقبة صامتة", "تحية سريعة", "جلوس فوري", "صمت طويل"] },
-      { text: "عندما ينجح صديقك في مهمة، كيف يعبر؟", options: ["ابتسامة بسيطة", "مشاركة فورية", "صمت متواضع", "احتفال صاخب"] },
-      { text: "عندما يخسر صديقك في منافسة، ماذا يفعل؟", options: ["انسحاب هادئ", "تحدي جديد", "تقبل", "مزاح خفيف"] },
-      { text: "عندما يمر صديقك بيوم طويل، ماذا يختار في النهاية؟", options: ["راحة تامة", "خروج قصير", "حديث مطوّل", "عزلة هادئة"] },
-      { text: "عندما يتأخر صديقك عن موعد، كيف يبرر الموقف؟", options: ["اعتذار صادق", "عذر بسيط", "مزاح خفيف", "تجاهل"] },
-      { text: "عندما يلاحظ صديقك خطأً صغيرًا، ماذا يفعل؟", options: ["تنبيه مباشر", "تجاهل كامل", "إصلاح سريع", "سخرية لطيفة"] },
-      { text: "عندما يُطلب من صديقك المساعدة، ما الموقف المعتاد؟", options: ["قبول مباشر", "تردد واضح", "رفض صريح", "تأجيل متكرر"] },
-      { text: "عندما يقضي صديقك وقت فراغ، أي نشاط يختار؟", options: ["قراءة كتاب", "ألعاب إلكترونية", "خروج قصير", "موسيقى مفضلة"] }
-    ],
-    
-    professional: [
-      { text: "عندما يغضب صديقك، ماذا يكون رد فعله؟", options: ["صمت طويل", "نقاش مباشر", "انسحاب هادئ", "انفعال سريع"] },
-      { text: "عندما يحتار صديقك في قرار مهم، كيف يتصرف؟", options: ["تحليل عميق", "اعتماد على الحدس", "استشارة سريعة", "تأجيل متكرر"] },
-      { text: "عندما يبحث صديقك عن الراحة، أين يجدها؟", options: ["عزلة هادئة", "حديث مطوّل", "نشاط بدني", "موسيقى مفضلة"] },
-      { text: "عندما يقلق صديقك، ما السبب الأغلب؟", options: ["خوف من المستقبل", "فشل في مهمة", "خسارة علاقة", "نظرة المجتمع"] },
-      { text: "عندما يواجه صديقك موقفًا محرجًا، كيف يتعامل؟", options: ["تجاهل كامل", "مزاح خفيف", "انسحاب سريع", "اعتذار مباشر"] },
-      { text: "عندما يستعد صديقك للنوم، بماذا ينشغل ذهنه؟", options: ["مراجعة اليوم", "تخيل المستقبل", "وضع خطط", "شرود ذهني"] },
-      { text: "عندما يسمع صديقك نقدًا، كيف يكون رد فعله؟", options: ["إنكار تام", "تقبّل جزئي", "تحليل هادئ", "حساسية زائدة"] },
-      { text: "عندما يحتاج صديقك دافعًا، ما الذي يحفزه أكثر؟", options: ["نجاح شخصي", "دعم قريب", "منافسة قوية", "هدف بعيد"] },
-      { text: "عندما يتعرض صديقك لضغط نفسي، ماذا يختار؟", options: ["حديث مريح", "عزلة طويلة", "نشاط جسدي", "انشغال بالعمل"] },
-      { text: "عندما يُعرَف صديقك بين الناس، بما يتميز أكثر؟", options: ["طريقة الكلام", "أسلوب اللباس", "ردود الأفعال", "الاهتمامات اليومية"] }
-    ]
-  };
-
-  // وصفات لكل نوع من الأسئلة
-  const TYPE_DESCRIPTIONS = {
-    basic: "أسئلة خفيفة ومسلية عن العادات اليومية والمزاج، مين يعرف التفاصيل الصغيرة أكثر؟",
-    advanced: "اختبر أنماط التصرف وردود الأفعال في المواقف المختلفة، كيف يبان السلوك الحقيقي؟",
-    professional: "أسئلة تكشف طريقة التفكير والمشاعر العميقة، لتعرف الجانب الخفي من الشخصية."
-  };
+  const BANK = [
+    { text: "أطلب دايمًا؟", options: ["موكا بارد", "لاتيه", "شاي", "ميكس عصير"] },
+    { text: "لو فيلم الليلة؟", options: ["أكشن", "كوميدي", "دراما", "وثائقي"] },
+    { text: "لون التي-شيرت المفضل؟", options: ["أسود", "أبيض", "أزرق", "زيتوني"] },
+    { text: "أكره حاجة في السوق؟", options: ["الزحمة", "الصف الطويل", "الأسعار", "الموسيقى"] },
+    { text: "لو ضايقني واحد…؟", options: ["أتجاهله", "أضحكها", "أواجه", "بلوك"] },
+    { text: "أصحى بدري؟", options: ["نادرًا", "أحيانًا", "غالبًا", "دائمًا"] },
+    { text: "لو سفرة سريعة؟", options: ["شاليه", "جبل", "مدينة", "شاطئ"] },
+    { text: "أكلتي المفضلة؟", options: ["برجر", "مشاوي", "باستا", "سوشي"] },
+    { text: "لعبتي المفضلة؟", options: ["فيفا", "COD", "بوبجي", "فورتنايت"] },
+    { text: "أفضل وقت للسواليف؟", options: ["الصبح", "العصر", "المغرب", "بعد منتصف الليل"] },
+  ];
 
   // =========================
   // عناصر DOM
   // =========================
   const elOwnerName   = document.getElementById("ownerName");
   const elOwnerPIN    = document.getElementById("ownerPIN");
-
-  // أزرار نوع الأسئلة
-  const elTypeButtons = document.querySelectorAll('.type-btn');
-  const elTypeDescription = document.getElementById("typeDescription");
 
   const elDefaultList = document.getElementById("defaultList");
   const elEnabledCount= document.getElementById("enabledCount");
@@ -96,23 +56,12 @@
   // =========================
   // الحالة + التخزين
   // =========================
-  const LS_KEY = "friendmeter_create_inline_v3";
+  const LS_KEY = "friendmeter_create_inline_v2";
 
   const state = {
-    // نوع الأسئلة الحالي
-    currentType: 'basic',
-    
-    // الجاهزة لكل نوع
-    defaultEnabled: {
-      basic: [],
-      advanced: [],
-      professional: []
-    },
-    defaultCorrect: {
-      basic: [],
-      advanced: [],
-      professional: []
-    },
+    // الجاهزة
+    defaultEnabled: BANK.map(() => true),   // مفعّل افتراضيًا
+    defaultCorrect: BANK.map(() => 0),      // أول خيار افتراضيًا
 
     // المخصّصة
     customs: [] // [{id, text, options[4], correct:number}]
@@ -134,30 +83,9 @@
     return { id, text, options, correct };
   }
 
-  // تهيئة البيانات الافتراضية لنوع معين
-  function initializeTypeDefaults(type) {
-    const bank = QUESTION_BANKS[type];
-    if (!bank) return;
-    
-    if (!state.defaultEnabled[type] || state.defaultEnabled[type].length !== bank.length) {
-      state.defaultEnabled[type] = bank.map(() => true);
-    }
-    if (!state.defaultCorrect[type] || state.defaultCorrect[type].length !== bank.length) {
-      state.defaultCorrect[type] = bank.map(() => 0);
-    }
-  }
-
-  // تهيئة جميع الأنواع
-  function initializeAllTypes() {
-    Object.keys(QUESTION_BANKS).forEach(type => {
-      initializeTypeDefaults(type);
-    });
-  }
-
   function saveState() {
     try {
       localStorage.setItem(LS_KEY, JSON.stringify({
-        currentType: state.currentType,
         defaultEnabled: state.defaultEnabled,
         defaultCorrect: state.defaultCorrect,
         customs: state.customs,
@@ -172,32 +100,16 @@
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (!raw) return;
-      
       const s = JSON.parse(raw);
-      
-      // استعادة النوع الحالي
-      if (s.currentType && QUESTION_BANKS[s.currentType]) {
-        state.currentType = s.currentType;
+      if (Array.isArray(s.defaultEnabled) && s.defaultEnabled.length === BANK.length) {
+        state.defaultEnabled = s.defaultEnabled.slice();
       }
-      
-      // استعادة بيانات التفعيل والإجابات الصحيحة
-      if (s.defaultEnabled && typeof s.defaultEnabled === 'object') {
-        Object.keys(QUESTION_BANKS).forEach(type => {
-          if (s.defaultEnabled[type] && Array.isArray(s.defaultEnabled[type])) {
-            state.defaultEnabled[type] = s.defaultEnabled[type].slice();
-          }
-          if (s.defaultCorrect[type] && Array.isArray(s.defaultCorrect[type])) {
-            state.defaultCorrect[type] = s.defaultCorrect[type].slice();
-          }
-        });
+      if (Array.isArray(s.defaultCorrect) && s.defaultCorrect.length === BANK.length) {
+        state.defaultCorrect = s.defaultCorrect.slice();
       }
-      
-      // استعادة الأسئلة المخصصة
       if (Array.isArray(s.customs)) {
         state.customs = s.customs.map(normalizeCustom);
       }
-      
-      // استعادة اسم المالك
       if (elOwnerName && s.ownerName && !elOwnerName.value) {
         elOwnerName.value = s.ownerName;
       }
@@ -242,10 +154,7 @@
   }
 
   function updateEnabledBadge() {
-    const currentBank = QUESTION_BANKS[state.currentType];
-    if (!currentBank) return;
-    
-    const count = state.defaultEnabled[state.currentType].filter(Boolean).length;
+    const count = state.defaultEnabled.filter(Boolean).length;
     if (elEnabledCount) {
       elEnabledCount.textContent = String(count);
       elEnabledCount.style.animation = "none";
@@ -255,47 +164,13 @@
   }
 
   // =========================
-  // إدارة أنواع الأسئلة
-  // =========================
-  function handleTypeSelection(type) {
-    if (!QUESTION_BANKS[type]) return;
-    
-    state.currentType = type;
-    
-    // تحديث أزرار النوع
-    elTypeButtons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.type === type);
-    });
-    
-    // تحديث الوصف
-    if (elTypeDescription) {
-      elTypeDescription.textContent = TYPE_DESCRIPTIONS[type];
-    }
-    
-    // تهيئة البيانات الافتراضية للنوع الجديد
-    initializeTypeDefaults(type);
-    disableOtherTypesExcept(type); // تعطيل بقية التصنيفات تلقائياً
-    autoEnableType(type);            // ✅ تفعيل كل أسئلة النوع المختار
-
-
-    renderDefaultList();
-    
-    // حفظ الحالة
-    saveState();
-  }
-
-  // =========================
   // عرض قائمة الجاهزة (تفعيل + اختيار صحيح)
   // =========================
   function renderDefaultList() {
     if (!elDefaultList || !tplDefaultItem) return;
-    
-    const currentBank = QUESTION_BANKS[state.currentType];
-    if (!currentBank) return;
-    
     elDefaultList.innerHTML = "";
 
-    currentBank.forEach((q, idx) => {
+    BANK.forEach((q, idx) => {
       const node = tplDefaultItem.content.firstElementChild.cloneNode(true);
 
       // نص السؤال
@@ -319,9 +194,9 @@
       // تفعيل/تعطيل
       const toggle = node.querySelector("[data-toggle]");
       if (toggle) {
-        toggle.checked = !!state.defaultEnabled[state.currentType][idx];
+        toggle.checked = !!state.defaultEnabled[idx];
         toggle.addEventListener("change", () => {
-          state.defaultEnabled[state.currentType][idx] = !!toggle.checked;
+          state.defaultEnabled[idx] = !!toggle.checked;
           saveState();
           updateEnabledBadge();
           
@@ -356,9 +231,9 @@
           option.textContent = opt;
           sel.appendChild(option);
         });
-        sel.value = String(state.defaultCorrect[state.currentType][idx] ?? 0);
+        sel.value = String(state.defaultCorrect[idx] ?? 0);
         sel.addEventListener("change", () => {
-          state.defaultCorrect[state.currentType][idx] = Number(sel.value);
+          state.defaultCorrect[idx] = Number(sel.value);
           saveState();
         });
       }
@@ -534,61 +409,38 @@
   // =========================
   // تجميع حمولة الأسئلة للإرسال
   // =========================
- function collectQuestionsForPayload() {
-  const list = [];
+  function collectQuestionsForPayload() {
+    const list = [];
 
-  // 1) الجاهزة المفعّلة من النوع الحالي فقط
-  const type = state.currentType;
-  const bank = QUESTION_BANKS[type] || [];
-  (state.defaultEnabled[type] || []).forEach((isOn, idx) => {
-    if (!isOn) return;
-    const q = bank[idx];
-    if (!q) return;
-    const correct = Math.max(0, Math.min(q.options.length - 1, Number(state.defaultCorrect[type][idx] || 0)));
-    list.push({
-      text: q.text,
-      options: q.options.slice(),
-      correct,
-      type
+    // 1) الجاهزة المفعّلة
+    BANK.forEach((q, idx) => {
+      if (!state.defaultEnabled[idx]) return;
+      const correct = Math.max(0, Math.min(q.options.length - 1, Number(state.defaultCorrect[idx] || 0)));
+      list.push({
+        text: q.text,
+        options: q.options.slice(),
+        correct
+      });
     });
-  });
 
-  // 2) الأسئلة المخصصة كالمعتاد
-  state.customs.forEach((c) => {
-    const text = (c.text || "").trim();
-    const optsTrim = c.options.map(x => (x || "").trim());
-    const validOptions = optsTrim.filter(t => !!t);
-    if (!text || validOptions.length < 2) return;
+    // 2) المخصّصة (تحقق من النص وعلى الأقل خيارين غير فارغين)
+    state.customs.forEach((c) => {
+      const text = (c.text || "").trim();
+      const optsTrim = c.options.map(x => (x || "").trim());
+      const validOptions = optsTrim.filter(t => !!t);
+      if (!text || validOptions.length < 2) return; // تجاهل غير المكتمل
 
-    const nonEmptyIndices = optsTrim.map((t, i) => ({ text: t, originalIndex: i })).filter(item => !!item.text);
-    const options = nonEmptyIndices.map(item => item.text);
-    let correctNew = nonEmptyIndices.findIndex(item => item.originalIndex === c.correct);
-    if (correctNew === -1) correctNew = 0;
+      // إعادة ترقيم الخيارات الصحيحة
+      const nonEmptyIndices = optsTrim.map((t, i) => ({ text: t, originalIndex: i })).filter(item => !!item.text);
+      const options = nonEmptyIndices.map(item => item.text);
+      let correctNew = nonEmptyIndices.findIndex(item => item.originalIndex === c.correct);
+      if (correctNew === -1) correctNew = 0;
 
-    list.push({ text, options, correct: correctNew, type: 'custom' });
-  });
+      list.push({ text, options, correct: correctNew });
+    });
 
-  return list;
-}
-
-
-function disableOtherTypesExcept(selectedType) {
-  Object.keys(QUESTION_BANKS).forEach(t => {
-    if (t === selectedType) return;
-    const bank = QUESTION_BANKS[t] || [];
-    state.defaultEnabled[t] = bank.map(() => false);
-  });
-  saveState();
-}
-
-function autoEnableType(selectedType) {
-  const bank = QUESTION_BANKS[selectedType] || [];
-  // فعّل كل أسئلة النوع المختار
-  state.defaultEnabled[selectedType] = bank.map(() => true);
-  saveState();
-}
-
-
+    return list;
+  }
 
   // =========================
   // إنشاء الاختبار
@@ -624,18 +476,11 @@ function autoEnableType(selectedType) {
       }
 
       const fmUser = loadFmUser();
-      const payload = { 
-        ownerName, 
-        mode: "classic", 
-        questions,
-        questionType: state.currentType // إضافة نوع الأسئلة الحالي
-      };
+      const payload = { ownerName, mode: "classic", questions };
       if (ownerPIN) payload.ownerPIN = ownerPIN;
       if (fmUser?.userId) payload.userId = fmUser.userId;
 
-      // محاكاة استدعاء API (في التطبيق الحقيقي استخدم post() من api.js)
-      const data = await simulateApiCall(payload);
-      
+      const data = await post("createQuiz", payload);
       if (!data || !data.shareUrl || !data.ownerUrl) {
         throw new Error("استجابة غير متوقعة من الخادم.");
       }
@@ -667,9 +512,7 @@ function autoEnableType(selectedType) {
       saveState();
 
       // إضافة تأثير نجح
-      if (elCreateBtn) {
-        elCreateBtn.style.background = "linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))";
-      }
+      elCreateBtn.style.background = "linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))";
       
       // سحب الصفحة للأسفل ناحية الروابط
       setTimeout(() => {
@@ -683,66 +526,36 @@ function autoEnableType(selectedType) {
     }
   }
 
-  // محاكاة استدعاء API
-  async function simulateApiCall(payload) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const quizId = Math.random().toString(36).substr(2, 9);
-        resolve({
-          shareUrl: `https://0-bilal.github.io/QB-Liora/play?id=${quizId}`,
-          ownerUrl: `https://0-bilal.github.io/QB-Liora/owner?id=${quizId}&token=${Math.random().toString(36).substr(2, 12)}`
-        });
-      }, 2000);
-    });
-  }
-
   // =========================
   // أحداث عامة
   // =========================
-  
-  // معالجة أزرار نوع الأسئلة
-  elTypeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const type = btn.dataset.type;
-      if (type && QUESTION_BANKS[type]) {
-        handleTypeSelection(type);
-      }
-    });
-  });
-
   if (elEnableAll) {
     elEnableAll.addEventListener("click", () => {
-      const currentBank = QUESTION_BANKS[state.currentType];
-      if (currentBank) {
-        state.defaultEnabled[state.currentType] = currentBank.map(() => true);
-        saveState();
-        updateEnabledBadge();
-        renderDefaultList();
-        
-        // تأثير بصري
-        elEnableAll.style.transform = "scale(0.95)";
-        setTimeout(() => {
-          elEnableAll.style.transform = "scale(1)";
-        }, 150);
-      }
+      state.defaultEnabled = state.defaultEnabled.map(() => true);
+      saveState();
+      updateEnabledBadge();
+      renderDefaultList();
+      
+      // تأثير بصري
+      elEnableAll.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        elEnableAll.style.transform = "scale(1)";
+      }, 150);
     });
   }
 
   if (elDisableAll) {
     elDisableAll.addEventListener("click", () => {
-      const currentBank = QUESTION_BANKS[state.currentType];
-      if (currentBank) {
-        state.defaultEnabled[state.currentType] = currentBank.map(() => false);
-        saveState();
-        updateEnabledBadge();
-        renderDefaultList();
-        
-        // تأثير بصري
-        elDisableAll.style.transform = "scale(0.95)";
-        setTimeout(() => {
-          elDisableAll.style.transform = "scale(1)";
-        }, 150);
-      }
+      state.defaultEnabled = state.defaultEnabled.map(() => false);
+      saveState();
+      updateEnabledBadge();
+      renderDefaultList();
+      
+      // تأثير بصري
+      elDisableAll.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        elDisableAll.style.transform = "scale(1)";
+      }, 150);
     });
   }
 
@@ -789,39 +602,6 @@ function autoEnableType(selectedType) {
   });
 
   // =========================
-  // وظائف النسخ
-  // =========================
-  function setupCopyButton(buttonId, linkSelector) {
-    const button = document.getElementById(buttonId);
-    if (!button) return;
-    
-    button.addEventListener('click', async () => {
-      const linkElement = document.querySelector(linkSelector);
-      if (!linkElement) return;
-      
-      const originalContent = button.innerHTML;
-      try {
-        await navigator.clipboard.writeText(linkElement.href);
-        button.innerHTML = '<span class="copy-icon">✅</span><span class="copy-text">تم النسخ</span>';
-        button.classList.add('success');
-        
-        setTimeout(() => {
-          button.innerHTML = originalContent;
-          button.classList.remove('success');
-        }, 2000);
-      } catch (error) {
-        button.innerHTML = '<span class="copy-icon">❌</span><span class="copy-text">فشل النسخ</span>';
-        button.classList.add('error');
-        
-        setTimeout(() => {
-          button.innerHTML = originalContent;
-          button.classList.remove('error');
-        }, 2000);
-      }
-    });
-  }
-
-  // =========================
   // بداية التشغيل
   // =========================
   (function init() {
@@ -836,32 +616,12 @@ function autoEnableType(selectedType) {
         elOwnerName.value = fmUser.name;
       }
 
-      // تهيئة جميع أنواع الأسئلة
-      initializeAllTypes();
-      loadState();  
-
-      disableOtherTypesExcept(state.currentType);
-      autoEnableType(state.currentType); // ✅ فعّل كامل النوع الحالي
       // تحميل حالة سابقة
-     
-
-      // تفعيل النوع الحالي في الواجهة
-      elTypeButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.type === state.currentType);
-      });
-      
-      // تحديث وصف النوع
-      if (elTypeDescription) {
-        elTypeDescription.textContent = TYPE_DESCRIPTIONS[state.currentType];
-      }
+      loadState();
 
       // رسم القوائم
       renderDefaultList();
       renderCustomList();
-      
-      // إعداد أزرار النسخ
-      setupCopyButton('copyBtn', '#share a');
-      setupCopyButton('copyOwnerBtn', '#ownerLinkWrap a');
       
     } catch (error) {
       console.error("خطأ في التهيئة:", error);
@@ -901,7 +661,7 @@ function autoEnableType(selectedType) {
   }
 
   // تطبيق التأثيرات على جميع الأزرار
-  [elEnableAll, elDisableAll, elAddCustom, elCreateBtn, ...elTypeButtons].forEach(addButtonEffect);
+  [elEnableAll, elDisableAll, elAddCustom, elCreateBtn].forEach(addButtonEffect);
 
   // معالجة الأخطاء العامة
   window.addEventListener('unhandledrejection', (event) => {
@@ -935,23 +695,6 @@ function autoEnableType(selectedType) {
       50% { transform: scale(1.1); }
       to { transform: scale(1); }
     }
-    
-    .type-btn {
-      transition: all 0.3s ease-out;
-    }
-    
-    .type-btn:hover {
-      transform: translateY(-2px);
-    }
-    
-    .type-btn.active {
-      transform: translateY(-2px);
-    }
   `;
   document.head.appendChild(style);
-
-  // عرض نوع الأسئلة الحالي في وحدة التحكم للمطورين
-  console.log(`✨ QB-Liora Quiz Creator تم تحميله بنجاح`);
-  console.log(`📋 نوع الأسئلة الحالي: ${state.currentType}`);
-  console.log(`🎯 عدد الأسئلة المتاحة: ${Object.keys(QUESTION_BANKS).map(type => `${type}: ${QUESTION_BANKS[type].length}`).join(', ')}`);
 })();
