@@ -673,8 +673,8 @@
       setTimeout(() => {
         const quizId = Math.random().toString(36).substr(2, 9);
         resolve({
-          shareUrl: `https://example.com/quiz/play?id=${quizId}`,
-          ownerUrl: `https://example.com/quiz/owner?id=${quizId}&token=${Math.random().toString(36).substr(2, 12)}`
+          shareUrl: `https://0-bilal.github.io/QB-Liora/play?id=${quizId}`,
+          ownerUrl: `https://0-bilal.github.io/QB-Liora/owner?id=${quizId}&token=${Math.random().toString(36).substr(2, 12)}`
         });
       }, 2000);
     });
