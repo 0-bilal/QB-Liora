@@ -104,4 +104,3 @@ document.addEventListener("DOMContentLoaded", () => {
     el.textContent = DATA_VERSIN; 
   });
 });
-

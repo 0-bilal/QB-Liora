@@ -4,13 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QB-Liora</title>
-  <meta name="description" content="أنشئ اختباراً شخصياً من الأسئلة الجاهزة أو المخصصة. حدد إجاباتك واحصل على روابط المشاركة فوراً." />
+  <meta name="description" content="أنشئ اختبارًا شخصيًا من الأسئلة الجاهزة أو المخصصة. حدد إجاباتك واحصل على روابط المشاركة فورًا." />
   <meta name="theme-color" content="#0ea5e9" />
+  <link rel="stylesheet" href="./assets/css/variables.css" />
   <link rel="stylesheet" href="./assets/css/base.css" />
   <link rel="stylesheet" href="./assets/css/create.css" />
+  <link rel="icon" href="./assets/ico/favicon.ico" />
 </head>
 <body>
-  <!-- شريط التنقل العلوي -->
+  <!-- Header -->
   <header>
     <div class="container">
       <div class="header-content">
@@ -35,7 +37,7 @@
 
   <main>
     <div class="container">
-      <!-- قسم المقدمة -->
+      <!-- Introduction Section -->
       <section class="intro-section">
         <div class="intro-content">
           <h1 class="intro-title">
@@ -50,7 +52,7 @@
           <div class="intro-steps">
             <div class="step-item">
               <span class="step-number">1</span>
-              <span>اختر الأسئلة</span>
+              <span>اختر نوع الأسئلة</span>
             </div>
             <div class="step-divider">→</div>
             <div class="step-item">
@@ -66,7 +68,7 @@
         </div>
       </section>
 
-      <!-- بيانات المالك -->
+      <!-- Owner Information -->
       <section class="owner-card">
         <div class="section-header">
           <div class="section-title">
@@ -120,7 +122,39 @@
         </div>
       </section>
 
-      <!-- الأسئلة الجاهزة -->
+      <!-- Question Types Selection -->
+      <section class="question-types-card">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>
+              <span class="title-icon">🎯</span>
+              نوع الأسئلة
+            </h2>
+            <p>اختر مستوى الأسئلة المناسب لك ولأصدقائك</p>
+          </div>
+        </div>
+        
+        <div class="question-types-buttons">
+          <button class="type-btn active" data-type="basic">
+            <span class="type-icon">🤝</span>
+            <span>أسئلة معرفة</span>
+          </button>
+          <button class="type-btn" data-type="advanced">
+            <span class="type-icon">🤹</span>
+            <span>أسئلة سلوكيات</span>
+          </button>
+          <button class="type-btn" data-type="professional">
+            <span class="type-icon">🧠</span>
+            <span>أسئلة سيكولوجيا</span>
+          </button>
+        </div>
+        
+        <div class="type-description" id="typeDescription">
+          أسئلة بسيطة ومناسبة للجميع حول الاهتمامات اليومية والتفضيلات العامة
+        </div>
+      </section>
+
+      <!-- Default Questions -->
       <section class="defaults-card">
         <div class="section-header">
           <div class="section-title">
@@ -162,7 +196,7 @@
         <div id="defaultList" class="questions-grid"></div>
       </section>
 
-      <!-- الأسئلة المخصصة -->
+      <!-- Custom Questions -->
       <section class="customs-card">
         <div class="section-header">
           <div class="section-title">
@@ -181,7 +215,7 @@
         
         <div class="customs-help">
           <div class="help-item">
-            <span class="help-icon">✍️</span>
+            <span class="help-icon">✏️</span>
             <span>اكتب سؤالك وأضف 4 خيارات كحد أقصى</span>
           </div>
           <div class="help-item">
@@ -197,7 +231,7 @@
         <div id="customList" class="customs-grid"></div>
       </section>
 
-      <!-- أزرار العمل -->
+      <!-- Action Section -->
       <section class="actions-section">
         <div class="actions-content">
           <button id="createBtn" class="btn-create">
@@ -218,7 +252,7 @@
         </div>
       </section>
 
-      <!-- نتائج الإنشاء -->
+      <!-- Result Cards -->
       <section id="shareBox" class="result-card success-card" style="display: none;">
         <div class="result-header">
           <div class="result-icon success">🎉</div>
@@ -248,7 +282,7 @@
 
       <section id="ownerBox" class="result-card owner-card" style="display: none;">
         <div class="result-header">
-          <div class="result-icon owner">🔐</div>
+          <div class="result-icon owner">📊</div>
           <div class="result-title">
             <h3>رابط المالك (سري)</h3>
             <p>استخدم هذا الرابط لمتابعة النتائج - لا تشاركه مع أحد</p>
@@ -273,10 +307,10 @@
         </div>
       </section>
 
-      <!-- رسائل الخطأ -->
+      <!-- Error Messages -->
       <div id="err" class="error-alert" style="display: none;"></div>
 
-      <!-- نصائح ومساعدة -->
+      <!-- Tips Section -->
       <section class="tips-section">
         <div class="tips-header">
           <h2>
@@ -303,13 +337,12 @@
             <h3>كن مبدعاً</h3>
             <p>أضف أسئلة مخصصة تعبر عن شخصيتك وتجعل الاختبار أكثر تميزاً</p>
           </div>
-          
+        </div>
       </section>
     </div>
   </main>
 
-  <!-- التذييل -->
-   <!-- Footer -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-brand">
@@ -334,26 +367,24 @@
       <div class="footer-info">
         <h4 class="footer-title">معلومات</h4>
         <ul class="link-list">
-          <li><a >ليورا — QB-Liora</a></li>
-          <li><a >الاصدار v2.1</a></li>
-          <li><a >تاريخ النشر 2025 سبنمبر</a></li>
+          <li><a>ليورا – QB-Liora</a></li>
+          <li><a>الاصدار v4.1</a></li>
+          <li><a>تاريخ النشر 2025 سبتمبر</a></li>
         </ul>
       </div>
 
       <div class="footer-info">
         <h4 class="footer-title">المطور والادوات</h4>
         <ul class="link-list">
-          <li><a >تطوير بلال الخواجة</a></li>
-          <li><a >اللغات البرمجية</a></li>
-          <li><a >html , css , JavaScript</a></li>
+          <li><a>تطوير بلال الخواجة</a></li>
+          <li><a>اللغات البرمجية</a></li>
+          <li><a>html , css , JavaScript</a></li>
         </ul>
       </div>
-
-    </div>
     </div>
   </footer>
 
-  <!-- قوالب الأسئلة -->
+  <!-- Templates -->
   <template id="tplDefaultItem">
     <div class="question-card default-question" data-default-item>
       <div class="question-header">
@@ -456,84 +487,8 @@
     </div>
   </template>
 
-  <!-- السكربتات -->
+  <!-- Scripts -->
   <script src="./assets/js/api.js"></script>
   <script src="./assets/js/create.js"></script>
-  <script>
-    // تحسينات إضافية لتجربة المستخدم
-    (function() {
-      // نسخ الروابط
-      function setupCopyButton(buttonId, linkSelector) {
-        const button = document.getElementById(buttonId);
-        if (!button) return;
-        
-        button.addEventListener('click', async () => {
-          const linkElement = document.querySelector(linkSelector);
-          if (!linkElement) return;
-          
-          const originalContent = button.innerHTML;
-          try {
-            await navigator.clipboard.writeText(linkElement.href);
-            button.innerHTML = '<span class="copy-icon">✅</span><span class="copy-text">تم النسخ</span>';
-            button.classList.add('success');
-            
-            setTimeout(() => {
-              button.innerHTML = originalContent;
-              button.classList.remove('success');
-            }, 2000);
-          } catch (error) {
-            button.innerHTML = '<span class="copy-icon">❌</span><span class="copy-text">فشل النسخ</span>';
-            button.classList.add('error');
-            
-            setTimeout(() => {
-              button.innerHTML = originalContent;
-              button.classList.remove('error');
-            }, 2000);
-          }
-        });
-      }
-      
-      setupCopyButton('copyBtn', '#share a');
-      setupCopyButton('copyOwnerBtn', '#ownerLinkWrap a');
-      
-      // تقييد PIN للأرقام فقط
-      const pinInput = document.getElementById('ownerPIN');
-      if (pinInput) {
-        pinInput.addEventListener('input', (e) => {
-          e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
-        });
-      }
-      
-      // تأثيرات التمرير السلس
-      function smoothScrollToElement(elementId) {
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-          });
-        }
-      }
-      
-      // إضافة مراقب للنتائج للتمرير التلقائي
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-            const target = mutation.target;
-            if ((target.id === 'shareBox' || target.id === 'ownerBox') && 
-                target.style.display === 'block') {
-              setTimeout(() => smoothScrollToElement(target.id), 100);
-            }
-          }
-        });
-      });
-      
-      const shareBox = document.getElementById('shareBox');
-      const ownerBox = document.getElementById('ownerBox');
-      
-      if (shareBox) observer.observe(shareBox, { attributes: true });
-      if (ownerBox) observer.observe(ownerBox, { attributes: true });
-    })();
-  </script>
 </body>
 </html>

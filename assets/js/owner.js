@@ -146,7 +146,7 @@
     if (!x) return "—";
     try {
       const d = new Date(x);
-      return d.toLocaleString("ar-SA", {
+      return d.toLocaleString("en-US", {
         year: "numeric", 
         month: "short", 
         day: "2-digit",
@@ -162,7 +162,7 @@
     if (!x) return "—";
     try {
       const d = new Date(x);
-      return d.toLocaleString("ar-SA", {
+      return d.toLocaleString("en-US", {
         year: "2-digit",
         month: "short", 
         day: "2-digit"

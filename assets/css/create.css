@@ -1,11 +1,11 @@
-/* create.css - تنسيقات صفحة إنشاء الاختبار */
+/* create.css - تنسيقات صفحة إنشاء الاختبار مع أنواع الأسئلة */
 
-/* المحتوى الرئيسي */
+/* ===== المحتوى الرئيسي ===== */
 main {
   padding: var(--spacing-xl) 0;
 }
 
-/* قسم المقدمة */
+/* ===== قسم المقدمة ===== */
 .intro-section {
   text-align: center;
   padding: var(--spacing-3xl) 0;
@@ -62,6 +62,17 @@ main {
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .intro-description {
@@ -127,8 +138,9 @@ main {
   }
 }
 
-/* بطاقات الأقسام */
+/* ===== بطاقات الأقسام ===== */
 .owner-card,
+.question-types-card,
 .defaults-card,
 .customs-card {
   background: var(--surface-primary);
@@ -151,6 +163,16 @@ main {
   background: linear-gradient(90deg, var(--accent-secondary), var(--primary-400));
 }
 
+.question-types-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--warning-500), var(--warning-400));
+}
+
 .defaults-card::before {
   content: '';
   position: absolute;
@@ -171,7 +193,7 @@ main {
   background: linear-gradient(90deg, var(--warning-500), var(--warning-400));
 }
 
-/* رؤوس الأقسام */
+/* ===== رؤوس الأقسام ===== */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -230,7 +252,70 @@ main {
   font-weight: 700;
 }
 
-/* نموذج بيانات المالك */
+/* ===== قسم أنواع الأسئلة ===== */
+.question-types-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-lg);
+}
+
+.type-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--surface-secondary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  min-height: 48px;
+  flex: 1;
+  justify-content: center;
+}
+
+.type-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.type-btn.active {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-color: var(--accent-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.type-btn.active .type-icon {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.type-icon {
+  font-size: var(--font-size-lg);
+}
+
+.type-description {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--surface-secondary);
+  border-radius: var(--border-radius-lg);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  border: 1px solid var(--border-primary);
+}
+
+/* ===== عناصر النموذج ===== */
 .owner-form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -326,7 +411,7 @@ main {
   font-size: var(--font-size-sm);
 }
 
-/* مساعدات الأقسام */
+/* ===== مساعدات الأقسام ===== */
 .defaults-help,
 .customs-help {
   display: flex;
@@ -350,14 +435,14 @@ main {
   font-size: var(--font-size-base);
 }
 
-/* شبكة الأسئلة */
+/* ===== شبكة الأسئلة ===== */
 .questions-grid,
 .customs-grid {
   display: grid;
   gap: var(--spacing-lg);
 }
 
-/* بطاقات الأسئلة */
+/* ===== بطاقات الأسئلة ===== */
 .question-card {
   background: var(--surface-secondary);
   border: 1px solid var(--border-primary);
@@ -380,7 +465,7 @@ main {
   border-left: 4px solid var(--warning-500);
 }
 
-/* رأس السؤال */
+/* ===== رؤوس الأسئلة ===== */
 .question-header {
   display: flex;
   justify-content: space-between;
@@ -412,7 +497,7 @@ main {
   font-size: var(--font-size-base);
 }
 
-/* مفاتيح التبديل */
+/* ===== مفاتيح التبديل ===== */
 .question-toggle {
   display: flex;
   align-items: center;
@@ -466,7 +551,7 @@ main {
   color: var(--accent-primary);
 }
 
-/* عرض الخيارات */
+/* ===== عرض الخيارات ===== */
 .question-options {
   margin-bottom: var(--spacing-md);
 }
@@ -486,7 +571,7 @@ main {
   font-size: var(--font-size-sm);
 }
 
-/* اختيار الإجابة */
+/* ===== اختيار الإجابة ===== */
 .question-answer {
   margin-bottom: var(--spacing-md);
 }
@@ -523,7 +608,7 @@ main {
   box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 }
 
-/* أزرار التحكم */
+/* ===== أزرار التحكم ===== */
 .question-controls {
   display: flex;
   gap: var(--spacing-xs);
@@ -562,7 +647,7 @@ main {
   color: white;
 }
 
-/* نموذج السؤال المخصص */
+/* ===== نموذج مخصص ===== */
 .custom-form {
   display: grid;
   gap: var(--spacing-md);
@@ -646,7 +731,7 @@ main {
   font-size: var(--font-size-xs);
 }
 
-/* ملاحظات الأسئلة */
+/* ===== ملاحظات الأسئلة ===== */
 .question-note {
   display: flex;
   align-items: center;
@@ -663,7 +748,7 @@ main {
   font-size: var(--font-size-sm);
 }
 
-/* قسم الإجراءات */
+/* ===== قسم الإجراءات ===== */
 .actions-section {
   background: var(--surface-primary);
   border: 1px solid var(--border-primary);
@@ -776,7 +861,7 @@ main {
   font-size: var(--font-size-base);
 }
 
-/* بطاقات النتائج */
+/* ===== بطاقات النتائج ===== */
 .result-card {
   background: var(--surface-primary);
   border: 1px solid var(--border-primary);
@@ -785,6 +870,8 @@ main {
   margin-bottom: var(--spacing-lg);
   box-shadow: var(--shadow-lg);
   animation: slideUp 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
 }
 
 @keyframes slideUp {
@@ -924,7 +1011,7 @@ main {
 }
 
 .btn-copy.success {
-  background: var(--accent-primary);
+  background: var(--success-600);
 }
 
 .btn-copy.error {
@@ -942,7 +1029,7 @@ main {
   flex-wrap: wrap;
 }
 
-/* رسائل الخطأ */
+/* ===== رسائل الخطأ ===== */
 .error-alert {
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
@@ -972,7 +1059,7 @@ main {
   }
 }
 
-/* قسم النصائح */
+/* ===== قسم النصائح ===== */
 .tips-section {
   background: var(--surface-primary);
   border: 1px solid var(--border-primary);
@@ -1037,7 +1124,7 @@ main {
   font-size: var(--font-size-sm);
 }
 
-/* استجابة للشاشات الصغيرة */
+/* ===== تصميم متجاوب ===== */
 @media (max-width: 768px) {
   main {
     padding: var(--spacing-lg) 0;
@@ -1057,6 +1144,7 @@ main {
   }
   
   .owner-card,
+  .question-types-card,
   .defaults-card,
   .customs-card,
   .actions-section {
@@ -1077,6 +1165,14 @@ main {
   .owner-form {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
+  }
+  
+  .question-types-buttons {
+    flex-direction: column;
+  }
+  
+  .type-btn {
+    justify-content: center;
   }
   
   .defaults-help,
@@ -1116,13 +1212,14 @@ main {
   }
 }
 
-/* استجابة للشاشات الصغيرة جداً */
+/* ===== شاشات صغيرة جداً ===== */
 @media (max-width: 480px) {
   .intro-title {
     font-size: var(--font-size-2xl);
   }
   
   .owner-card,
+  .question-types-card,
   .defaults-card,
   .customs-card,
   .actions-section,
@@ -1152,7 +1249,7 @@ main {
   }
 }
 
-/* تحسينات الأداء */
+/* ===== تحسينات الأداء ===== */
 .question-card,
 .result-card,
 .tip-card,
@@ -1160,10 +1257,11 @@ main {
   will-change: transform;
 }
 
-/* تأثيرات التركيز للوصولية */
+/* ===== تأثيرات التركيز للوصولية ===== */
 .btn-create:focus-visible,
 .btn-copy:focus-visible,
-.control-btn:focus-visible {
+.control-btn:focus-visible,
+.type-btn:focus-visible {
   outline: 3px solid rgba(14, 165, 233, 0.3);
   outline-offset: 2px;
 }
@@ -1174,7 +1272,7 @@ main {
   outline-offset: 2px;
 }
 
-/* تقليل الحركة للمستخدمين الذين يفضلون ذلك */
+/* ===== تقليل الحركة للمستخدمين الذين يفضلون ذلك ===== */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -1192,6 +1290,10 @@ main {
   }
   
   .result-card {
+    animation: none;
+  }
+  
+  .type-btn.active .type-icon {
     animation: none;
   }
 }

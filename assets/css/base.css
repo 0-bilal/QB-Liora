@@ -1,181 +1,7 @@
-/* base.css - FriendMeter التصميم الأساسي الجديد */
+/* base.css - التنسيقات الأساسية لـ FriendMeter */
 
-/* إعداد المتغيرات للألوان - الوضع الفاتح */
-:root {
-  /* الألوان الأساسية */
-  --primary-50: #f0f9ff;
-  --primary-100: #e0f2fe;
-  --primary-200: #bae6fd;
-  --primary-300: #7dd3fc;
-  --primary-400: #38bdf8;
-  --primary-500: #0ea5e9;
-  --primary-600: #0284c7;
-  --primary-700: #0369a1;
-  --primary-800: #075985;
-  --primary-900: #0c4a6e;
-
-  --secondary-50: #f8fafc;
-  --secondary-100: #f1f5f9;
-  --secondary-200: #e2e8f0;
-  --secondary-300: #cbd5e1;
-  --secondary-400: #94a3b8;
-  --secondary-500: #64748b;
-  --secondary-600: #475569;
-  --secondary-700: #334155;
-  --secondary-800: #1e293b;
-  --secondary-900: #0f172a;
-
-  --accent-50: #cff8ff;
-  --accent-100: #b6f1fc;
-  --accent-200: #8feeff;
-  --accent-300: #5dc2d4;
-  --accent-400: #43bacf;
-  --accent-500: #00d8ff;
-  --accent-600: #037b91;
-  --accent-700: #026577;
-  --accent-800: #0c5461;
-  --accent-900: #01333b;
-
-  --danger-50: #fef2f2;
-  --danger-100: #fee2e2;
-  --danger-200: #fecaca;
-  --danger-300: #fca5a5;
-  --danger-400: #f87171;
-  --danger-500: #ef4444;
-  --danger-600: #dc2626;
-  --danger-700: #b91c1c;
-  --danger-800: #991b1b;
-  --danger-900: #7f1d1d;
-
-  --warning-50: #fffbeb;
-  --warning-100: #fef3c7;
-  --warning-200: #fde68a;
-  --warning-300: #fcd34d;
-  --warning-400: #fbbf24;
-  --warning-500: #f59e0b;
-  --warning-600: #d97706;
-  --warning-700: #b45309;
-  --warning-800: #92400e;
-  --warning-900: #78350f;
-
-  /* متغيرات النظام - الوضع الفاتح */
-  --bg-primary: #ffffff;
-  --bg-secondary: var(--secondary-50);
-  --bg-tertiary: var(--secondary-100);
-  --bg-elevated: #ffffff;
-  
-  --text-primary: var(--secondary-900);
-  --text-secondary: var(--secondary-700);
-  --text-tertiary: var(--secondary-500);
-  --text-muted: var(--secondary-400);
-  --text-inverse: #ffffff;
-  
-  --border-primary: var(--secondary-200);
-  --border-secondary: var(--secondary-300);
-  --border-focus: var(--primary-500);
-  
-  --surface-primary: #ffffff;
-  --surface-secondary: var(--secondary-50);
-  --surface-elevated: #ffffff;
-  
-  --accent-primary: var(--accent-600);
-  --accent-primary-hover: var(--accent-700);
-  --accent-secondary: var(--primary-600);
-  --accent-secondary-hover: var(--primary-700);
-  
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-
-  /* الأبعاد والمسافات */
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --border-radius-xl: 16px;
-  --border-radius-2xl: 24px;
-  
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-  --spacing-3xl: 64px;
-  
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  
-  --line-height-tight: 1.25;
-  --line-height-base: 1.5;
-  --line-height-relaxed: 1.75;
-  
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-
-
-/* ===== التذييل ===== */
-
---primary-bg-f: #0f1419;
---max-width-2xl-f: 1400px;
---space-3xl-f: 64px;
---space-lg-f: 24px;
---space-2xl-f: 48px;
---space-sm-f: 8px;
---font-size-xl-f: 1.25rem;
---text-primary-f: #ffffff;
---space-md-f: 16px;
---text-muted-f: #8892b0;
---font-size-base-f: 1rem;
---font-size-lg-f: 1.125rem;
---text-secondary-f: #b4bcd0;
---transition-fast-f: 0.15s ease-out;
---accent-primary-f: #00d8ff;
---accent-danger-f: #ef4444;
-
-
-
-}
-
-/* الوضع المظلم */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    --bg-elevated: #1e293b;
-    
-    --text-primary: var(--secondary-50);
-    --text-secondary: var(--secondary-200);
-    --text-tertiary: var(--secondary-400);
-    --text-muted: var(--secondary-500);
-    --text-inverse: var(--secondary-900);
-    
-    --border-primary: var(--secondary-700);
-    --border-secondary: var(--secondary-600);
-    
-    --surface-primary: #1e293b;
-    --surface-secondary: #334155;
-    --surface-elevated: #475569;
-    
-    --accent-primary: var(--accent-500);
-    --accent-primary-hover: var(--accent-400);
-    --accent-secondary: var(--primary-400);
-    --accent-secondary-hover: var(--primary-300);
-    
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
-  }
-}
+/* استيراد ملف المتغيرات */
+@import url('./variables.css');
 
 /* إعداد الخط والأساسيات */
 * {
@@ -194,6 +20,7 @@ html {
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -204,7 +31,7 @@ body {
   font-weight: 400;
   line-height: var(--line-height-base);
   color: var(--text-primary);
-  background: var(--bg-primary);
+  background: var(--surface-primary);
   direction: rtl;
   text-align: right;
   min-height: 100vh;
@@ -212,6 +39,8 @@ body {
   flex-direction: column;
   overflow-x: hidden;
   transition: background-color var(--transition-base), color var(--transition-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* التخطيط الأساسي */
@@ -413,7 +242,7 @@ a:focus {
 
 .btn-ghost:hover,
 .btn-ghost:focus {
-  background: var(--bg-tertiary);
+  background: var(--surface-tertiary);
   color: var(--text-primary);
 }
 
@@ -497,7 +326,7 @@ label {
   padding: var(--spacing-md);
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.2);
-  color: var(--accent-700);
+  color: var(--success-700);
   border-radius: var(--border-radius-lg);
   font-size: var(--font-size-sm);
   margin: var(--spacing-md) 0;
@@ -509,7 +338,7 @@ label {
   }
   
   .success {
-    color: var(--accent-300);
+    color: var(--success-300);
   }
 }
 
@@ -655,6 +484,72 @@ main {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* التذييل */
+.footer {
+  background: var(--footer-bg);
+  border-top: 1px solid var(--footer-border);
+  padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+  margin-top: var(--spacing-3xl);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-2xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.footer-brand {
+  max-width: 300px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--footer-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-description {
+  color: var(--footer-text-muted);
+  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.footer-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--footer-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link-list li {
+  margin-bottom: var(--spacing-sm);
+}
+
+.link-list a {
+  color: var(--footer-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  font-size: var(--font-size-base);
+}
+
+.link-list a:hover {
+  color: var(--footer-accent);
+}
+
 /* إمكانية الوصول */
 .sr-only {
   position: absolute;
@@ -668,11 +563,6 @@ main {
   border: 0;
 }
 
-/* التمرير السلس */
-html {
-  scroll-behavior: smooth;
-}
-
 /* إزالة التركيز للماوس */
 button:focus:not(:focus-visible),
 input:focus:not(:focus-visible),
@@ -682,11 +572,6 @@ textarea:focus:not(:focus-visible) {
 }
 
 /* تحسين الأداء */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 img {
   max-width: 100%;
   height: auto;
@@ -698,7 +583,7 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: var(--surface-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -718,95 +603,4 @@ img {
   textarea {
     font-size: 16px;
   }
-}
-
-/* ===== التذييل ===== */
-.footer {
-  background: var(--primary-bg-f);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-}
-
-.footer-content {
-  max-width: var(--max-width-2xl-f);
-  margin: 0 auto;
-  padding: var(--space-3xl-f) var(--space-lg-f) var(--space-2xl-f);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--space-2xl-f);
-}
-
-.footer-brand {
-  max-width: 300px;
-}
-
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm-f);
-  font-size: var(--font-size-xl-f);
-  font-weight: 700;
-  color: var(--text-primary-f);
-  margin-bottom: var(--space-md-f);
-}
-
-.footer-description {
-  color: var(--text-muted-f);
-  line-height: 1.7;
-  font-size: var(--font-size-base-f);
-}
-
-.footer-title {
-  font-size: var(--font-size-lg-f);
-  font-weight: 600;
-  color: var(--text-primary-f);
-  margin-bottom: var(--space-lg-f);
-}
-
-.link-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.link-list li {
-  margin-bottom: var(--space-sm-f);
-}
-
-.link-list a {
-  color: var(--text-secondary-f);
-  text-decoration: none;
-  transition: color var(--transition-fast-f);
-  font-size: var(--font-size-base-f);
-}
-
-.link-list a:hover {
-  color: var(--accent-primary-f);
-}
-
-.footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: var(--space-xl-f) var(--space-lg-f);
-  text-align: center;
-}
-
-.copyright {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm-f);
-  color: var(--text-muted-f);
-  font-size: var(--font-size-base-f);
-  margin: 0;
-}
-
-.heart {
-  color: var(--accent-danger-f);
-  font-size: 1.2em;
-  animation: heartbeat 2s ease-in-out infinite;
-}
-
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
 }
